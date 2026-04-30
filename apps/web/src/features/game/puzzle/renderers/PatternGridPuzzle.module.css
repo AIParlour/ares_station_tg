@@ -1,0 +1,167 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   PatternGridPuzzle — Toggle-cell grid with station terminal aesthetic.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  flex: 1;
+}
+
+/* ── Optional clue line ────────────────────────────────────────────────────── */
+
+.root__clue {
+  margin: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  border-left: 2px solid #d4983a;
+}
+
+/* ── Grid layout ───────────────────────────────────────────────────────────── */
+
+.root__grid {
+  display: grid;
+  grid-template-columns: auto repeat(var(--grid-cols), 1fr);
+  gap: 3px;
+  align-self: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* Corner spacer (top-left empty cell) */
+.root__corner {
+  /* occupies the intersection of row-labels column and col-headers row */
+}
+
+/* ── Column / row labels ───────────────────────────────────────────────────── */
+
+.root__colLabel,
+.root__rowLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-dim);
+  user-select: none;
+}
+
+.root__colLabel {
+  padding-bottom: 2px;
+}
+
+.root__rowLabel {
+  padding-right: 4px;
+}
+
+/* ── Grid cell ─────────────────────────────────────────────────────────────── */
+
+.root__cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.root__cell:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.root__cell:disabled {
+  cursor: default;
+}
+
+/* ── Active (toggled on) ───────────────────────────────────────────────────── */
+
+.root__cell--active {
+  background: rgba(212, 152, 58, 0.18);
+  border-color: #d4983a;
+  box-shadow: 0 0 8px 2px rgba(240, 192, 96, 0.3);
+  animation: cell-pulse 1.6s ease-in-out infinite;
+}
+
+/* ── Correct flash ─────────────────────────────────────────────────────────── */
+
+.root__cell--correct {
+  background: rgba(134, 239, 172, 0.2);
+  border-color: #86efac;
+  box-shadow: 0 0 10px 3px rgba(134, 239, 172, 0.35);
+  animation: cell-correct-flash 0.5s ease-in-out 3;
+}
+
+/* ── Wrong flash ───────────────────────────────────────────────────────────── */
+
+.root__cell--wrong {
+  background: rgba(252, 165, 165, 0.2);
+  border-color: #fca5a5;
+  box-shadow: 0 0 8px 2px rgba(252, 165, 165, 0.3);
+  animation: cell-shake 0.4s ease-in-out;
+}
+
+/* ── Error message ─────────────────────────────────────────────────────────── */
+
+.root__error {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: #fca5a5;
+  text-align: center;
+}
+
+/* ── Submit button ─────────────────────────────────────────────────────────── */
+
+.root__submit {
+  margin-top: auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root__submit:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.root__submit:not(:disabled):active {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+}
+
+/* ── Animations ────────────────────────────────────────────────────────────── */
+
+@keyframes cell-pulse {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(240, 192, 96, 0.2); }
+  50%      { box-shadow: 0 0 14px 4px rgba(240, 192, 96, 0.45); }
+}
+
+@keyframes cell-correct-flash {
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(134, 239, 172, 0.25); }
+  50%      { box-shadow: 0 0 18px 6px rgba(134, 239, 172, 0.55); }
+}
+
+@keyframes cell-shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-3px); }
+  40%      { transform: translateX(3px); }
+  60%      { transform: translateX(-2px); }
+  80%      { transform: translateX(2px); }
+}

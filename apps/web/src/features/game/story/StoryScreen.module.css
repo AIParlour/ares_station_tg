@@ -1,0 +1,127 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   StoryScreen — Dr. Leskov's personal log (reward after all puzzles solved).
+   Clean reading experience — no special highlighting on revealed text.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.story {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────────── */
+
+.story__header {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.story__title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.story__meta {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+/* ── Body ────────────────────────────────────────────────────────────────────── */
+
+.story__body {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.story__line {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.story__break {
+  height: 0.6rem;
+}
+
+/* ── Complete Day CTA ────────────────────────────────────────────────────────── */
+
+.story__complete {
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);
+  border-top: 2px solid var(--color-border-active);
+}
+
+.story__complete__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  cursor: pointer;
+  animation: ares-pulse 2s ease-in-out infinite;
+  transition: background 0.15s;
+}
+
+.story__complete__btn:hover {
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.story__complete__icon {
+  font-size: 0.9rem;
+}
+
+.story__complete__hint {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin-top: var(--spacing-xs);
+}
+
+/* ── Empty / Footer ──────────────────────────────────────────────────────────── */
+
+.story__empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+}
+
+.story__footer {
+  padding: var(--spacing-lg);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  border-top: 1px solid var(--color-border);
+}

@@ -1,0 +1,62 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   ARES STATION — Global styles
+   Only truly global rules live here. Component styles are in CSS modules.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@import "./variables.css";
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+:root { color-scheme: dark; }
+
+html {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  /* Prevent bounce/overscroll inside Telegram WebView */
+  overscroll-behavior: none;
+  /* Use dynamic viewport height (handles TG bottom bar) */
+  height: 100dvh;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  /* Safe area for iPhone notch / TG gesture bar */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Typography base ─────────────────────────────────────────────────────── */
+input, textarea, button, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Scrollbar (minimal, themed) ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+/* ── Loading pulse animation (used by LoadingScreen) ─────────────────────── */
+@keyframes ares-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 1;    }
+}
+
+@keyframes ares-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

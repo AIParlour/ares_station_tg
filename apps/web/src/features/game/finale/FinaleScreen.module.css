@@ -1,0 +1,184 @@
+.finale {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+/* ── Loading ─────────────────────────────────────────────────────────────────── */
+
+.finale__loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.15em;
+  animation: ares-blink 1s step-start infinite;
+}
+
+/* ── Reset button ────────────────────────────────────────────────────────────── */
+
+.finale__reset {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.finale__reset:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Unlock words ────────────────────────────────────────────────────────────── */
+
+.finale__unlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+}
+
+.finale__unlock__label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+}
+
+.finale__unlock__word {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-active);
+  border-radius: 2px;
+  padding: 0.1rem 0.4rem;
+  text-transform: uppercase;
+}
+
+/* ── Message thread ──────────────────────────────────────────────────────────── */
+
+.finale__thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md) var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.finale__bubble {
+  max-width: 88%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.finale__bubble--user {
+  align-self: flex-end;
+}
+
+.finale__bubble--paradox {
+  align-self: flex-start;
+}
+
+.finale__bubble__label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+}
+
+.finale__bubble__text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.finale__bubble--user .finale__bubble__text {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: var(--color-text-secondary);
+}
+
+.finale__bubble--paradox .finale__bubble__text {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.finale__bubble__text--typing {
+  animation: ares-blink 0.6s step-start infinite;
+  color: var(--color-text-muted);
+}
+
+/* ── Input area ──────────────────────────────────────────────────────────────── */
+
+.finale__input__group {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-sm));
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.finale__input {
+  flex: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-primary);
+  caret-color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.finale__input:focus {
+  border-color: var(--color-border-active);
+}
+
+.finale__input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.finale__send {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.finale__send:hover:not(:disabled) {
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.finale__send:disabled {
+  opacity: 0.35;
+  cursor: default;
+}

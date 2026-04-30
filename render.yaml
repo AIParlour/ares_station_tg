@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Render Blueprint — Ares Station
+# Single web service: Express serves both API and frontend SPA.
+# Database hosted externally on Neon (free tier).
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  - type: web
+    name: ares-station
+    runtime: node
+    plan: free
+    region: frankfurt          # closest to EU/CIS audience
+    buildCommand: npm run build:production
+    startCommand: npm run db:migrate && npm run db:seed && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"         # install devDeps too (tsx needed for seed)
+      - key: DATABASE_URL
+        sync: false            # set manually in dashboard
+      - key: JWT_SECRET
+        generateValue: true    # Render auto-generates a random value
+      - key: BOT_TOKEN
+        sync: false            # set manually in dashboard
+      - key: FRONTEND_URL
+        sync: false            # set to your Render URL after first deploy

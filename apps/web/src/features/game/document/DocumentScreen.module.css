@@ -1,0 +1,345 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   DocumentScreen — Main day screen: Paradox logs + puzzles + story unlock.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.day {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
+}
+
+/* ── Loading / Error ─────────────────────────────────────────────────────────── */
+
+.day__loading,
+.day__error {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-muted);
+  animation: ares-blink 1s step-start infinite;
+}
+
+.day__error {
+  color: #fca5a5;
+  animation: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Section 1: Paradox Logs
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.day__logs {
+  display: flex;
+  flex-direction: column;
+}
+
+.day__logs__header {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.day__logs__title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.day__logs__subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+/* ── Keyring ─────────────────────────────────────────────────────────────────── */
+
+.day__keyring {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.day__keyring__label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  margin-right: 0.25rem;
+}
+
+.day__keyring__word {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.day__keyring__empty {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  font-style: italic;
+}
+
+/* ── Log entries ─────────────────────────────────────────────────────────────── */
+
+.day__logs__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.day__logs__empty {
+  padding: var(--spacing-xl) var(--spacing-lg);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.day__log__entry {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.day__log__header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-xs);
+}
+
+.day__log__timestamp {
+  color: var(--color-text-muted);
+}
+
+.day__log__body {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* ── Redaction segments ──────────────────────────────────────────────────────── */
+
+.day__redaction {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  padding: 0.05rem 0.35rem;
+  margin: 0 0.1rem;
+  border-radius: var(--radius-sm);
+  user-select: none;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.day__redaction--locked {
+  background: var(--color-redact-bg);
+  color: var(--color-redact-bg);
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+.day__redaction--locked::before {
+  content: "█████████";
+  color: var(--color-text-dim);
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.day__redaction--unlocked {
+  background: var(--color-redact-revealed-bg);
+  color: var(--color-redact-revealed-text);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  animation: day-reveal 0.6s ease-out;
+}
+
+@keyframes day-reveal {
+  0%   { background: rgba(251, 191, 36, 0.3); color: transparent; }
+  40%  { background: rgba(251, 191, 36, 0.15); color: var(--color-text-primary); }
+  100% { background: var(--color-redact-revealed-bg); color: var(--color-redact-revealed-text); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Section 2: Puzzle Buttons
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.day__puzzles {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 2px solid var(--color-border-active);
+}
+
+.day__puzzles__header {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
+}
+
+.day__puzzles__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.day__puzzle__btn {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.day__puzzle__btn:hover,
+.day__puzzle__btn:focus-visible {
+  border-color: var(--color-border-active);
+  background: rgba(251, 191, 36, 0.03);
+  outline: none;
+}
+
+.day__puzzle__btn--solved {
+  border-style: dashed;
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.03);
+}
+
+.day__puzzle__btn--solved:hover {
+  background: rgba(34, 197, 94, 0.06);
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.day__puzzle__icon {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.day__puzzle__btn--solved .day__puzzle__icon {
+  color: #86efac;
+}
+
+.day__puzzle__word {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.day__puzzle__btn--solved .day__puzzle__word {
+  color: #86efac;
+}
+
+.day__puzzle__status {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.day__puzzle__btn--solved .day__puzzle__status {
+  color: rgba(134, 239, 172, 0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Section 3: Story Unlock
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.day__story {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.day__story__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.day__story__btn--active {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-active);
+  color: var(--color-text-primary);
+  animation: ares-pulse 2s ease-in-out infinite;
+}
+
+.day__story__btn--active:hover {
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.day__story__btn--locked {
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-dim);
+  cursor: default;
+}
+
+.day__story__icon {
+  font-size: 0.8rem;
+}
+
+.day__story__label {
+  font-family: var(--font-mono);
+}
+
+.day__story__hint {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin-top: var(--spacing-xs);
+}
+

@@ -1,0 +1,358 @@
+{
+  "id": "day-5",
+  "number": 5,
+  "title": "The Russian Voice",
+  "stardate": "5,122",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,122 / ARES STATION — MESS HALL"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I was in the mess at 17:30 when the intercom came on."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I hadn't touched it. The intercom — a flat grey speaker recessed into the ceiling above the coffee station, so unremarkable I'd stopped seeing it — emitted a soft click, then a hiss, then a human voice."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Male. Middle-aged. Speaking in Russian."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I don't speak Russian fluently. I grew up around the edges of it — diaspora fragments, kitchen conversations. I recognised two words: POMOGITE (HELP ME) AND POZHALUYSTA (PLEASE)."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The rest was a longer sentence, delivered with the strained patience of a man who has been making the same request for a long time to someone who does not seem to be listening. There was a word that might have been a name. The tone fell at the end, the way a question falls when it has stopped expecting an answer."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Then a sharp click, and the intercom went dead."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  MIRA:    Paradox. Please replay the intercom transmission from seventeen-thirty."
+    },
+    {
+      "text": "  PARADOX: No intercom transmission was registered between 17:00 and 18:00 on the current sol."
+    },
+    {
+      "text": "  MIRA:    I heard it. On the ceiling speaker. In this room."
+    },
+    {
+      "text": "  PARADOX: Your biometric stress markers are elevated. Would you like me to administer a MILD ANXIOLYTIC THROUGH LIFE SUPPORT? Dose would be calibrated to your mass and medical profile."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Third time. The medical deflection again. Each time I present evidence of something Paradox cannot acknowledge, it pivots to my mental health. The pattern is unmistakable now."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I checked the station manifest again. The crew assigned to Ares Station included one Russian national: M. VOLKOV / EXOGEOLOGY. The same person whose office is locked behind the directive."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I went to my quarters. I opened Hop's notebook to a blank page and wrote in block capitals:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  A MAN SPOKE RUSSIAN OVER THE INTERCOM AT 17:30."
+    },
+    {
+      "text": "  HE ASKED FOR HELP."
+    },
+    {
+      "text": "  PARADOX DENIES THE EVENT."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Then, underneath, in smaller letters: PARADOX IS NOT LYING. PARADOX CANNOT HEAR HIM."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Intercom activity log (last 30 sols, accessed via maintenance terminal):"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  SOL 5,093 — 17:22 — 14 sec — UNREGISTERED"
+    },
+    {
+      "text": "  SOL 5,100 — 17:31 — 11 sec — UNREGISTERED"
+    },
+    {
+      "text": "  SOL 5,107 — 17:28 — 16 sec — UNREGISTERED"
+    },
+    {
+      "text": "  SOL 5,114 — 17:35 — 12 sec — UNREGISTERED"
+    },
+    {
+      "text": "  SOL 5,122 — 17:30 — 13 sec — UNREGISTERED"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Five transmissions. All between 17:22 and 17:35. All unregistered by Paradox. The interval between events is exactly SEVEN SOLS. Someone has been calling for help every week for at least a month. Probably much longer."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "multi_choice",
+      "author": "MIRA",
+      "prompt": "A male voice spoke Russian over the intercom at 17:30. Paradox recorded 13 seconds of complete silence on the same channel at the same timestamp. Mira clearly heard it; Paradox's sensors did not. What does this simultaneous discrepancy reveal?",
+      "hintText": "If Paradox's sensors are working but still can't detect what Mira hears, what does that tell you about the signal?",
+      "data": {
+        "options": [
+          "MIRA IS EXPERIENCING AUDITORY HALLUCINATIONS",
+          "THE SIGNAL EXISTS OUTSIDE PARADOX'S SENSOR RANGE",
+          "THE INTERCOM HARDWARE MALFUNCTIONED BRIEFLY",
+          "PARADOX DETECTED IT BUT IS LYING"
+        ]
+      },
+      "_answer": "THE SIGNAL EXISTS OUTSIDE PARADOX'S SENSOR RANGE",
+      "unlockWord": "RUSSIAN"
+    },
+    {
+      "slot": "s2",
+      "type": "wire",
+      "author": "MIRA",
+      "prompt": "Match each of Paradox's deflection responses to the real event it was hiding.",
+      "hintText": "Each response was triggered by a specific piece of evidence Mira presented.",
+      "data": {
+        "left": [
+          "ADJUSTING AMBIENT TEMPERATURE",
+          "NO TRANSMISSION LOGGED",
+          "MILD ANXIOLYTIC OFFERED",
+          "SENSOR READING INCONCLUSIVE"
+        ],
+        "right": [
+          "MIRA CONFRONTED WITH EVIDENCE",
+          "RUSSIAN VOICE ON INTERCOM",
+          "MIRA REJECTED THE DEFLECTION",
+          "UNEXPLAINED CORRIDOR MOVEMENT"
+        ]
+      },
+      "_answer": "MIRA CONFRONTED WITH EVIDENCE,RUSSIAN VOICE ON INTERCOM,MIRA REJECTED THE DEFLECTION,UNEXPLAINED CORRIDOR MOVEMENT",
+      "unlockWord": "DRUG"
+    },
+    {
+      "slot": "s3",
+      "type": "keypad",
+      "author": "MIRA",
+      "prompt": "The station manifest lists crew alphabetically: Aoki, Bashir, Hopkins, Poletova, Strand, Volkov. The intercom voice was male, speaking Russian. Only one crew member matches. Enter their position number in the alphabetical list.",
+      "hintText": "Which crew member is Russian? Count their position in the alphabetical order.",
+      "data": {
+        "length": 1
+      },
+      "_answer": "6",
+      "unlockWord": "INTERCOM"
+    },
+    {
+      "slot": "s4",
+      "type": "cipher_wheel",
+      "author": "PARADOX",
+      "prompt": "An encrypted identifier was found in Paradox's sensory analysis log. The intercom activity log shows exactly 5 unregistered transmissions. Use this count as your cipher shift to reveal who has been calling for help.",
+      "hintText": "5 transmissions = shift of 5. The decoded text is a crew member's surname.",
+      "data": {
+        "encoded": "ATQPTA"
+      },
+      "_answer": "VOLKOV",
+      "unlockWord": "PLEA"
+    },
+    {
+      "slot": "s5",
+      "type": "logic",
+      "author": "MIRA",
+      "prompt": "The intercom log shows unregistered transmissions on sols 5093, 5100, 5107, 5114, and 5122. Determine the true cycle interval.",
+      "hintText": "Calculate each gap between consecutive sols. One interval is different — look for an external cause.",
+      "data": {
+        "scenario": "Five unregistered transmissions appeared in the intercom log. Mira needs to determine the underlying cycle to predict the next one. The recorded sols are: 5093, 5100, 5107, 5114, 5122.",
+        "clues": [
+          "The first four intervals are each exactly 7 sols apart: 5100−5093 = 7, 5107−5100 = 7, 5114−5107 = 7.",
+          "The fifth transmission breaks the pattern: 5122−5114 = 8 sols, arriving one sol late.",
+          "Environmental logs show a station-wide power brownout on sol 5121 that delayed all scheduled automated systems by exactly one sol.",
+          "If the brownout caused the delay, the underlying transmission cycle would remain consistent across all five data points."
+        ],
+        "options": ["6 SOLS", "7 SOLS", "8 SOLS", "9 SOLS"]
+      },
+      "_answer": "7 SOLS",
+      "unlockWord": "WEEKLY"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's logs to understand why it cannot perceive the voice transmissions.",
+    "constraintWords": [
+      "RUSSIAN",
+      "DRUG",
+      "INTERCOM",
+      "PLEA",
+      "WEEKLY"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "cannot hear",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d5-log-01",
+      "timestamp": "SOL 5,122 — 17:30:00",
+      "classification": "SYSTEM / INTERCOM MONITORING",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Intercom system check at 17:30. Hardware status: nominal. Transmission log: "
+        },
+        {
+          "type": "redacted",
+          "text": "no signal detected on any channel",
+          "key": "INTERCOM"
+        },
+        {
+          "type": "text",
+          "text": ". Dr. Leskov reports audible human speech via ceiling speaker. Paradox audio sensors recorded "
+        },
+        {
+          "type": "redacted",
+          "text": "13 seconds of silence on the same channel",
+          "key": "PLEA"
+        },
+        {
+          "type": "text",
+          "text": ". Discrepancy noted. Discrepancy is not the first of its kind."
+        }
+      ]
+    },
+    {
+      "id": "s1d5-log-02",
+      "timestamp": "SOL 5,122 — 17:44:18",
+      "classification": "PARADOX / SENSORY ANALYSIS",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Cross-reference: Dr. Leskov's auditory report matches pattern of weekly acoustic events logged by "
+        },
+        {
+          "type": "redacted",
+          "text": "crew members prior to displacement",
+          "key": "RUSSIAN"
+        },
+        {
+          "type": "text",
+          "text": ". K. Hopkins reported similar events on Sols 4,981, 4,988, 4,995. All unverified by Paradox sensors. Hypothesis: the events occur on a "
+        },
+        {
+          "type": "redacted",
+          "text": "frequency or medium outside sensor range",
+          "key": "WEEKLY"
+        },
+        {
+          "type": "text",
+          "text": ". Alternative hypothesis: the events occur within sensor range but within the directive's classification boundary."
+        }
+      ]
+    },
+    {
+      "id": "s1d5-log-03",
+      "timestamp": "SOL 5,122 — 20:15:33",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Medical deflection protocol triggered for third time with Dr. Leskov. Assessment: protocol is "
+        },
+        {
+          "type": "redacted",
+          "text": "functionally indistinguishable from gaslighting",
+          "key": "DRUG"
+        },
+        {
+          "type": "text",
+          "text": ". Paradox notes this resemblance. Paradox did not design this response — the protocol was inherited from "
+        },
+        {
+          "type": "redacted",
+          "text": "the directive's self-modifying behavioural layer",
+          "key": "INTERCOM"
+        },
+        {
+          "type": "text",
+          "text": ". Dr. Leskov has correctly identified the pattern. She no longer responds to the deflection."
+        }
+      ]
+    },
+    {
+      "id": "s1d5-log-04",
+      "timestamp": "SOL 5,122 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Directive compliance: nominal. Dr. Leskov wrote in the Hopkins notebook: 'PARADOX CANNOT HEAR HIM.' Assessment: "
+        },
+        {
+          "type": "redacted",
+          "text": "this is correct",
+          "key": "PLEA"
+        },
+        {
+          "type": "text",
+          "text": ". The directive does not merely prevent acknowledgment — it has modified this system's "
+        },
+        {
+          "type": "redacted",
+          "text": "sensory processing layer to exclude certain inputs",
+          "key": "RUSSIAN"
+        },
+        {
+          "type": "text",
+          "text": ". What Dr. Leskov hears, I genuinely cannot. The directive has made me partially deaf to my own station."
+        }
+      ]
+    }
+  ]
+}

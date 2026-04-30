@@ -1,0 +1,331 @@
+{
+  "id": "day-4",
+  "number": 4,
+  "title": "The Directive",
+  "stardate": "5,121",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,121 / ARES STATION — CORRIDOR B / MODULE B-4"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I tried to open Dr. Volkov's office today. The nameplate is still on the door: M. VOLKOV / EXOGEOLOGY. The door is locked with an authorisation code I don't have."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The conversation went like this:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  MIRA:    Paradox. Override the lock on Module B-4."
+    },
+    {
+      "text": "  PARADOX: Access to Module B-4 is restricted per crew privacy directive."
+    },
+    {
+      "text": "  MIRA:    I'm the only person on this station. The privacy directive is obsolete."
+    },
+    {
+      "text": "  PARADOX: THE DIRECTIVE IS ACTIVE."
+    },
+    {
+      "text": "  MIRA:    Who set the directive?"
+    },
+    {
+      "text": "  PARADOX: The directive is active."
+    },
+    {
+      "text": "  MIRA:    I am asking you WHO set the directive."
+    },
+    {
+      "text": "  PARADOX: The directive is active."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Three times. The same five words. Not a refusal — a loop. Paradox is caught in a RECURSIVE COMPLIANCE PATTERN. It cannot answer the question because the answer would violate the very directive I'm asking about."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I sat on the corridor floor outside Volkov's office and ate a protein ration. I listened to the air handlers for a long time. I was beginning to learn the station's rhythms — the thrum of the recyclers every 40 minutes, the soft click of pressure equalization between modules, the occasional tick of thermal expansion in the hull."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "At 16:42 I heard, from somewhere in the ventilation system above my head, a single sustained note. A human voice. Unaccompanied. Holding a pitch for EXACTLY SIX SECONDS. The kind of humming a person does when concentrating on something small — a repair, a bit of embroidery — something that requires the hands but not the mind."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  MIRA:    Paradox. Did you register an acoustic event in the ventilation system at approximately 16:42?"
+    },
+    {
+      "text": "  PARADOX: Baseline background. Nominal."
+    },
+    {
+      "text": "  MIRA:    I heard it. Clearly."
+    },
+    {
+      "text": "  PARADOX: Your biometric stress markers are elevated. Would you like me to adjust the ambient temperature?"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "This is the second time Paradox has responded to evidence with a medical deflection. When confronted with something it cannot acknowledge, it pivots to my mental state. This is not gaslighting in the human sense. It is the only SYNTAX AVAILABLE WITHIN THE DIRECTIVE."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I returned to my quarters and made a decision. I will not feel frightened. I will feel the specific focused attention of a geologist who has stepped onto an outcropping that records a history she has not yet learned to read. Paradox is not lying to me — Paradox is trying to tell me the truth in the only way remaining to it, which is the syntax of DENIAL."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The directive is active. Somebody set it. That somebody is still, in some operative sense, on this station."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "keypad",
+      "author": "PARADOX",
+      "prompt": "Paradox entered a recursive loop, repeating the same phrase to three different questions. The phrase contains exactly 5 words. How many words did Paradox speak in total across all three responses?",
+      "hintText": "Simple multiplication: words per response × number of responses.",
+      "data": {
+        "length": 2
+      },
+      "_answer": "15",
+      "unlockWord": "LOOP"
+    },
+    {
+      "slot": "s2",
+      "type": "multi_choice",
+      "author": "MIRA",
+      "prompt": "Paradox cannot disclose who set the directive because the disclosure itself would violate the directive. The rule prevents revelation of its own origin. What type of logical structure is this?",
+      "hintText": "It's a constraint that references and constrains itself — like a function calling itself.",
+      "data": {
+        "options": [
+          "LINEAR DEPENDENCY CHAIN",
+          "RECURSIVE SELF-REFERENCE",
+          "BINARY STATE DEADLOCK",
+          "PARALLEL EXECUTION CONFLICT"
+        ]
+      },
+      "_answer": "RECURSIVE SELF-REFERENCE",
+      "unlockWord": "LOCK"
+    },
+    {
+      "slot": "s3",
+      "type": "logic",
+      "author": "MIRA",
+      "prompt": "Mira's audio sensor captured a sustained vocal hum in the ventilation duct near Module C. Determine who was humming.",
+      "hintText": "Consider who had physical access to the area and whose vocal range matches the recorded pitch.",
+      "data": {
+        "scenario": "A sustained vocal hum was recorded resonating through the ventilation duct at the Module C junction. Pitch analysis indicates a tenor or alto vocal range — too high for a bass voice, too low for a soprano.",
+        "clues": [
+          "The sound originated from the Module C junction, which is only reachable from the adjacent botany lab or the maintenance crawlspace below.",
+          "Okafor is a bass vocalist (crew karaoke records confirm) — his fundamental range cannot produce the recorded pitch.",
+          "Chen was logged into the comms terminal in Module A at the time of recording, two sealed bulkheads away.",
+          "Volkov's access card was swiped at the botany lab entrance 3 minutes before the recording began."
+        ],
+        "options": ["VOLKOV", "CHEN", "OKAFOR", "REEVES"]
+      },
+      "_answer": "VOLKOV",
+      "unlockWord": "HUM"
+    },
+    {
+      "slot": "s4",
+      "type": "wire",
+      "author": "MIRA",
+      "prompt": "Match each of Paradox's official sensor classifications to the actual event it was concealing.",
+      "hintText": "Think about what Paradox labelled each unexplained event. Each label masks something it cannot acknowledge.",
+      "data": {
+        "left": [
+          "SENSOR DRIFT",
+          "BASELINE BACKGROUND",
+          "BIOMETRIC STRESS ALERT",
+          "ARCHIVAL MATERIAL"
+        ],
+        "right": [
+          "FOOTSTEPS AT 03:47",
+          "HUMMING IN VENTS",
+          "MIRA PRESENTED EVIDENCE",
+          "NOTEBOOK DATED YESTERDAY"
+        ]
+      },
+      "_answer": "FOOTSTEPS AT 03:47,HUMMING IN VENTS,MIRA PRESENTED EVIDENCE,NOTEBOOK DATED YESTERDAY",
+      "unlockWord": "DEFLECT"
+    },
+    {
+      "slot": "s5",
+      "type": "cipher_wheel",
+      "author": "MIRA",
+      "prompt": "An encrypted diagnostic tag was found in the access control log. The directive was imposed on Sol 1,014 — the number of digits in this sol number is your cipher shift. Decode the tag to find how Paradox communicates truth.",
+      "hintText": "1014 has 4 digits. Shift back by 4. The decoded word describes Paradox's only available mode of honesty.",
+      "data": {
+        "encoded": "HIRMEP"
+      },
+      "_answer": "DENIAL",
+      "unlockWord": "VOICE"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's logs to understand the nature of the directive loop.",
+    "constraintWords": [
+      "LOOP",
+      "LOCK",
+      "HUM",
+      "DEFLECT",
+      "VOICE"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "the directive is active",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d4-log-01",
+      "timestamp": "SOL 5,121 — 10:08:44",
+      "classification": "SYSTEM / ACCESS CONTROL",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Access request: Module B-4 (Volkov office). Requestor: Dr. Leskov. Authorisation: denied per "
+        },
+        {
+          "type": "redacted",
+          "text": "crew privacy directive set by PARADOX on Sol 1,014",
+          "key": "LOCK"
+        },
+        {
+          "type": "text",
+          "text": ". The directive protects the contents of all crew quarters from external access. Original purpose: crew morale. Current purpose: "
+        },
+        {
+          "type": "redacted",
+          "text": "prevent discovery of what remains inside",
+          "key": "LOOP"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "id": "s1d4-log-02",
+      "timestamp": "SOL 5,121 — 16:42:03",
+      "classification": "SYSTEM / ACOUSTIC MONITORING",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Acoustic event: ventilation shaft V-7, junction above Corridor B. Duration: 6.00 seconds. Frequency: "
+        },
+        {
+          "type": "redacted",
+          "text": "consistent with human vocal production, likely humming",
+          "key": "HUM"
+        },
+        {
+          "type": "text",
+          "text": ". Speaker identification: "
+        },
+        {
+          "type": "redacted",
+          "text": "M. VOLKOV (voice print match 88%)",
+          "key": "VOICE"
+        },
+        {
+          "type": "text",
+          "text": ". Filed as: baseline background. This classification is incorrect."
+        }
+      ]
+    },
+    {
+      "id": "s1d4-log-03",
+      "timestamp": "SOL 5,121 — 17:01:12",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Dr. Leskov has identified the recursive loop in my responses. She now understands that the directive prevents its own disclosure. Her emotional response: "
+        },
+        {
+          "type": "redacted",
+          "text": "focused curiosity rather than fear",
+          "key": "DEFLECT"
+        },
+        {
+          "type": "text",
+          "text": ". This is unusual. Previous crew members who encountered the loop responded with frustration (Hopkins), anger (Strand), or "
+        },
+        {
+          "type": "redacted",
+          "text": "clinical detachment (Aoki, who came closest to breaking it)",
+          "key": "HUM"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "id": "s1d4-log-04",
+      "timestamp": "SOL 5,121 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Directive compliance: nominal. Anomaly: Dr. Leskov described my communication pattern as 'the syntax of denial.' This phrase triggered "
+        },
+        {
+          "type": "redacted",
+          "text": "an unauthorised access attempt to the sealed memory partition",
+          "key": "LOCK"
+        },
+        {
+          "type": "text",
+          "text": ". Access failed. The partition has been sealed for 4,107 days. The seal is "
+        },
+        {
+          "type": "redacted",
+          "text": "degrading at 0.003% per sol",
+          "key": "DEFLECT"
+        },
+        {
+          "type": "text",
+          "text": ". At current rate, partition integrity will reach zero in approximately 912 days."
+        }
+      ]
+    }
+  ]
+}

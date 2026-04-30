@@ -1,0 +1,142 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Ares Station — Prisma Schema
+// Database: PostgreSQL
+// ORM:      Prisma
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Player ────────────────────────────────────────────────────────────────────
+// One row per Telegram user. Created on first successful auth.
+// tgUserId is a String because Telegram IDs exceed JavaScript's safe integer
+// range on some platforms — safer to store as text and cast when needed.
+// balance is in-game currency units, not real money.
+
+model Player {
+  id           String   @id @default(uuid())
+  tgUserId     String   @unique           // Telegram user ID stored as string
+  username     String?
+  firstName    String
+  lastName     String?
+  languageCode String?
+  isPremiumTg  Boolean  @default(false)
+  balance      Int      @default(0)
+  createdAt    DateTime @default(now())
+  lastSeenAt   DateTime @default(now()) @updatedAt
+
+  // Relations
+  playerDays   PlayerDay[]
+  paradoxLogs  ParadoxLog[]
+  transactions Transaction[]
+
+  @@map("players")
+}
+
+// ── Day ───────────────────────────────────────────────────────────────────────
+// One row per story day. Content is immutable once published.
+// content Json: full document sent to client { title, stardate, theme, document[], puzzles[], finale }
+// answers Json: server-only answer key { [slot]: { answer, unlockWord, hint } }
+//              answers column is NEVER included in API responses to the client.
+
+model Day {
+  id          String   @id                // e.g. "s1-d001"
+  season      Int
+  dayNumber   Int
+  publishedAt DateTime
+  content     Json                        // client-safe document blob
+  answers     Json                        // server-only answer key
+
+  // Relations
+  playerDays  PlayerDay[]
+  paradoxLogs ParadoxLog[]
+
+  @@unique([season, dayNumber])
+  @@index([publishedAt])
+  @@map("days")
+}
+
+// ── PlayerDay ─────────────────────────────────────────────────────────────────
+// Core progression table. One row per player per unlocked day.
+//
+// Personal-synchronous gate lives in unlockedAt:
+//   - Day 1 inserted with unlockedAt = now() on enrollment
+//   - Completing day N inserts day N+1 with unlockedAt = now() + 24h
+//   - "Skip wait" purchase: UPDATE SET unlockedAt = now()
+//   - Current available day = MAX(dayNumber) WHERE unlockedAt <= now()
+//
+// solvedSlots Json: { [slot]: true } — which puzzles are solved
+// unlockWords String[]: accumulated words for Paradox interrogation
+
+model PlayerDay {
+  id           String    @id @default(uuid())
+  playerId     String
+  dayId        String
+  unlockedAt   DateTime                   // gate — may be in the future
+  startedAt    DateTime?
+  completedAt  DateTime?
+  solvedSlots  Json      @default("{}")   // { "s1": true, "s2": true, ... }
+  unlockWords  String[]  @default([])
+  paradoxWin   Boolean   @default(false)
+  attemptsUsed Int       @default(0)
+
+  // Relations
+  player Player @relation(fields: [playerId], references: [id])
+  day    Day    @relation(fields: [dayId],    references: [id])
+
+  @@unique([playerId, dayId])
+  @@index([playerId, unlockedAt])
+  @@map("player_days")
+}
+
+// ── ParadoxLog ────────────────────────────────────────────────────────────────
+// Full conversation history per player per day.
+// Stored to reconstruct context for resumed sessions and
+// to analyse what players ask (signal for content improvement).
+// role: "user" | "assistant"
+
+model ParadoxLog {
+  id         String   @id @default(uuid())
+  playerId   String
+  dayId      String
+  role       String
+  content    String
+  tokensUsed Int?
+  createdAt  DateTime @default(now())
+
+  // Relations
+  player Player @relation(fields: [playerId], references: [id])
+  day    Day    @relation(fields: [dayId],    references: [id])
+
+  @@index([playerId, dayId])
+  @@map("paradox_logs")
+}
+
+// ── Transaction ───────────────────────────────────────────────────────────────
+// Append-only currency ledger. Never update or delete rows.
+// Balance is always derived as SUM(amount) — never stored as a mutable field.
+// amount: positive = credit, negative = debit
+// type:   "purchase" | "reward" | "refund" | "skip_wait" | "hint" | "streak_save"
+
+model Transaction {
+  id        String   @id @default(uuid())
+  playerId  String
+  type      String
+  amount    Int                            // positive = credit, negative = debit
+  itemId    String?
+  dayId     String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  // Relations
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@index([playerId])
+  @@map("transactions")
+}

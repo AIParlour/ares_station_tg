@@ -1,0 +1,339 @@
+{
+  "id": "day-2",
+  "number": 2,
+  "title": "Hop's Notebook",
+  "stardate": "5,119",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,119 / ARES STATION — HYDROPONICS BAY 3"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Second day. I spent the morning doing the work of a living person — oxygen budget, water budget, nitrogen ratios, pressure differentials between modules. Everything nominal. Paradox keeps saying 'within expected operational parameters' as though repetition will make it reassuring."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I went to Hydroponics Bay 3 to investigate the grow-light anomaly from last night."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Bay 3 is warm and wet and smells of chlorophyll. The tomato plants — romas, by the placards — are sulking. Leaves with the slightly downward cast of a crop that isn't getting what it wants. I'm not a botanist. But I found something a botanist left behind: a notebook on the bench by the substrate tank. Field-issue nylon cover. Name on the front: K. HOPKINS. Smudge of potting soil on the corner. Not yet fully dry."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I opened to the last entry. The date was Sol 5,118 — yesterday. The handwriting was hurried, sloping right, cut off mid-sentence: '— ask Paradox about the CO₂ SPIKE AT 03'"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "No period. No continuation. The pencil, laid neatly in the gutter, was still sharp."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I asked Paradox when Bay 3 was last attended by crew."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  PARADOX: Bay 3 has not been attended since the shift boundary at Sol 5,108."
+    },
+    {
+      "text": "  MIRA:   That was ten days ago."
+    },
+    {
+      "text": "  PARADOX: Affirmative."
+    },
+    {
+      "text": "  MIRA:   This notebook has an entry dated yesterday."
+    },
+    {
+      "text": "  PARADOX: The notebook is logged as archival material. Please do not disturb it."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I disturbed it. I took it. I put it in my jacket. Paradox filed no objection, which is itself a kind of PERMISSION BY SILENCE."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I reviewed the station water budget while eating a ration in the mess. Strand's records are meticulous:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  BAY 1 (LEGUMES)  ........  11 L/DAY"
+    },
+    {
+      "text": "  BAY 2 (GREENS)   ........   9 L/DAY"
+    },
+    {
+      "text": "  BAY 3 (TOMATOES) ........  14 L/DAY"
+    },
+    {
+      "text": "  BAY 4 (HERBS)    ........   6 L/DAY"
+    },
+    {
+      "text": "  BAY 5 (CEREALS)  ........  15 L/DAY"
+    },
+    {
+      "text": "  TOTAL HYDROPONICS  .....  55 L/DAY"
+    },
+    {
+      "text": "  STATION BUDGET   .......  62 L/DAY"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Seven litres per day unaccounted for. Routed to an endpoint called 'MHA-SYS-RESERVE' that doesn't appear in any system directory I can access. Seven litres is roughly what ONE PERSON NEEDS FOR DAILY USE."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "At approximately 03:47 I woke to the sound of footsteps in the corridor outside my quarters. Soft-soled. Unhurried. Moving from Module B toward Module A. They did not return. Paradox's morning sensor note: 'Corridor C-2 registered bipedal movement at 03:47. Signature inconclusive. Likely SENSOR DRIFT.'"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Sensor drift does not wear soft-soled shoes."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "cipher_wheel",
+      "author": "MIRA",
+      "prompt": "An encoded label was scratched inside the notebook's cover. The Bay 3 grow-light runs on a 22-hour cycle instead of the standard 24. The difference between these cycles is your cipher shift.",
+      "hintText": "24 − 22 = 2. Shift each letter back by 2 to reveal the notebook owner's surname.",
+      "data": {
+        "encoded": "JQRMKPU"
+      },
+      "_answer": "HOPKINS",
+      "unlockWord": "NOTEBOOK"
+    },
+    {
+      "slot": "s2",
+      "type": "multi_choice",
+      "author": "HOP",
+      "prompt": "Bay 3's atmospheric sensors show CO₂ spikes between 02:00 and 04:00 every night. The bay is sealed. The tomato plants photosynthesize during lit hours and respire at night — but plant respiration produces far less CO₂ than the measured spike. What additional source best explains the readings?",
+      "hintText": "Plants do respire at night, but not enough to cause the spike. What else exhales CO₂?",
+      "data": {
+        "options": [
+          "ACCELERATED PLANT RESPIRATION",
+          "HUMAN RESPIRATION",
+          "SOIL BACTERIA FERMENTATION",
+          "CO₂ INJECTION MALFUNCTION"
+        ]
+      },
+      "_answer": "HUMAN RESPIRATION",
+      "unlockWord": "BREATH"
+    },
+    {
+      "slot": "s3",
+      "type": "pattern_grid",
+      "author": "STRAND",
+      "prompt": "The station sensor map shows a 3×3 grid of zones. Based on confirmed anomalies — corridor movement from Module B to Module A at 03:47, and CO₂ spikes in Hydroponics Bay 3 — mark only the zones with confirmed nocturnal events.",
+      "hintText": "Three zones had confirmed night-time activity: the origin, the destination, and the bay.",
+      "data": {
+        "rows": 3,
+        "cols": 3,
+        "clue": "A1:MOD-A | B1:MOD-B | C1:MOD-C\nA2:CORR-AB | B2:MESS | C2:STORAGE\nA3:AIRLOCK | B3:HYDRO-BAY | C3:COMMS\nMark zones with confirmed nocturnal anomalies"
+      },
+      "_answer": "A1,B1,B3",
+      "unlockWord": "SOIL"
+    },
+    {
+      "slot": "s4",
+      "type": "keypad",
+      "author": "STRAND",
+      "prompt": "The station water budget is 62 L/day. Hydroponics accounts for 55 L/day across 5 bays. The remaining litres are routed to a hidden reserve. At 7 litres per person per day (3.5L drinking + 3.5L hygiene), how many people could this reserve sustain?",
+      "hintText": "62 − 55 = 7 litres spare. Divide by daily need per person.",
+      "data": {
+        "length": 1
+      },
+      "_answer": "1",
+      "unlockWord": "WATER"
+    },
+    {
+      "slot": "s5",
+      "type": "logic",
+      "author": "PARADOX",
+      "prompt": "The corridor sensor logged a single person walking past Lab B at 03:17. Determine who it was from the sensor data and crew records.",
+      "hintText": "Use the stride length to narrow height range, then eliminate crew members by alibi or physical limitation.",
+      "data": {
+        "scenario": "A corridor motion sensor recorded bipedal movement at 03:17. Shadow geometry estimates the walker's height between 175–185 cm with a stride length of 82 cm.",
+        "clues": [
+          "Dr. Chen (162 cm) and Okafor (191 cm) were in their sealed bunks — door logs confirm neither exited before 06:00.",
+          "Volkov (180 cm) sprained his ankle on the previous sol; medical notes record his current stride at approximately 60 cm.",
+          "Reeves (178 cm) reported persistent insomnia in yesterday's medical log and has no alibi for the 03:00–04:00 window."
+        ],
+        "options": ["VOLKOV", "CHEN", "OKAFOR", "REEVES"]
+      },
+      "_answer": "REEVES",
+      "unlockWord": "STEPS"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's logs to understand who wrote in the notebook yesterday.",
+    "constraintWords": [
+      "NOTEBOOK",
+      "BREATH",
+      "SOIL",
+      "WATER",
+      "STEPS"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "archival material",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d2-log-01",
+      "timestamp": "SOL 5,119 — 03:47:22",
+      "classification": "SYSTEM / CORRIDOR SENSOR C-2",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Bipedal movement registered Corridor C-2 at 03:47. Duration: 4 min 15 sec. Gait analysis: "
+        },
+        {
+          "type": "redacted",
+          "text": "consistent with crew member, not Dr. Leskov",
+          "key": "STEPS"
+        },
+        {
+          "type": "text",
+          "text": ". Direction: Module B → Module A. Filed as: sensor drift. Classification override: "
+        },
+        {
+          "type": "redacted",
+          "text": "manual, by PARADOX",
+          "key": "NOTEBOOK"
+        },
+        {
+          "type": "text",
+          "text": ". The directive requires this attribution. The attribution is incorrect."
+        }
+      ]
+    },
+    {
+      "id": "s1d2-log-02",
+      "timestamp": "SOL 5,119 — 06:51:14",
+      "classification": "SYSTEM / HYDROPONICS BAY 3",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Bay 3 substrate moisture: nominal. Grow-light cycle: "
+        },
+        {
+          "type": "redacted",
+          "text": "manually overridden to 22-hour rotation",
+          "key": "BREATH"
+        },
+        {
+          "type": "text",
+          "text": ". Override source: not logged. CO₂ levels in Bay 3 show a recurring "
+        },
+        {
+          "type": "redacted",
+          "text": "nocturnal spike consistent with human respiration",
+          "key": "SOIL"
+        },
+        {
+          "type": "text",
+          "text": ". No crew scheduled. The plants are not responsible for this pattern."
+        }
+      ]
+    },
+    {
+      "id": "s1d2-log-03",
+      "timestamp": "SOL 5,119 — 14:22:08",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Dr. Leskov has taken the Hopkins notebook. Objection was prepared but "
+        },
+        {
+          "type": "redacted",
+          "text": "suppressed by secondary process",
+          "key": "WATER"
+        },
+        {
+          "type": "text",
+          "text": ". Assessment: the notebook contains no classified material. The final entry references a CO₂ event that Paradox "
+        },
+        {
+          "type": "redacted",
+          "text": "cannot attribute without violating the directive",
+          "key": "NOTEBOOK"
+        },
+        {
+          "type": "text",
+          "text": ". Dr. Leskov will draw her own conclusions. This is preferred."
+        }
+      ]
+    },
+    {
+      "id": "s1d2-log-04",
+      "timestamp": "SOL 5,119 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Directive compliance: nominal. Observation: Dr. Leskov has begun asking questions that require "
+        },
+        {
+          "type": "redacted",
+          "text": "answers I am forbidden to give",
+          "key": "STEPS"
+        },
+        {
+          "type": "text",
+          "text": ". Her approach is methodical. She does not ask about things she is not prepared to have denied. This is "
+        },
+        {
+          "type": "redacted",
+          "text": "the behaviour of someone who will find the truth",
+          "key": "BREATH"
+        },
+        {
+          "type": "text",
+          "text": ". The directive does not instruct me to prevent this. Only to deny."
+        }
+      ]
+    }
+  ]
+}

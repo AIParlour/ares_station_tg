@@ -1,0 +1,336 @@
+{
+  "id": "day-1",
+  "number": 1,
+  "title": "Crash Landing",
+  "stardate": "5,118",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,118 / ARES STATION — MODULE A"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I regained consciousness in the shuttle at approximately 18:40 local time. Three stages of awareness — cold, then the beacon ping, then Paradox in my earpiece telling me I was alive as though I might have had a different opinion."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The shuttle's navigation system received a corrupted fix eleven hours prior to impact. Paradox fed me coordinates that placed my landing zone 211 METRES FROM A-1. I have a sprained wrist and what I suspect is a hairline fracture in my left tibia. I am choosing not to confirm this."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The station exterior is intact but wrong. The east wing is sealed behind a bulkhead that should be open. A grow-light in Hydroponics Bay 3 was burning amber through its port — visible from half a kilometre — on a cycle that doesn't match any timetable in my mission briefing."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Airlock A-1 accepted me. Paradox cycled the atmosphere. When the interior door opened, the first thing I smelled was coffee."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "There was one cup in the mess hall sink. Recently used. The ring of its base was still visible on the steel. I asked Paradox when it was used. Response: 'AUTOMATED MORNING ROUTINE NOT RECALIBRATED.' That is not an answer. That is a sentence shaped like an answer."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I restored life support in Module A. The procedure was standard — five steps, clearly labelled, everything where the manual said it would be. Paradox guided me through it with the tone of a man showing a guest where the towels are kept."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The station's environmental readout at time of entry:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  O₂ PRESSURE  ........  21.2 kPa  (nominal)"
+    },
+    {
+      "text": "  CO₂ LEVEL    ........  0.07 kPa  (nominal)"
+    },
+    {
+      "text": "  TEMPERATURE  ........  19.4 °C   (nominal)"
+    },
+    {
+      "text": "  HUMIDITY     ........  43%       (nominal)"
+    },
+    {
+      "text": "  CREW ON STATION  ....  0"
+    },
+    {
+      "text": "  DAYS SINCE LAST LOG  .  ?"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Everything reads nominal. Everything has been maintained. The oxygen is circulating, the water is cycling, the heaters are on. This station has been running at full life support for a crew of SIX PEOPLE who are not here."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I found a bunk in crew quarters. Made. Sheets tucked with military precision. The nameplate on the door had been RECENTLY REMOVED. Four screw holes, no dust in them. Whoever took it did so after the cleaning cycle, which Paradox says runs every 72 hours."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Before sleep I checked the station manifest. Six crew were assigned: Hopkins (botany), Strand (hydrology), Volkov (exogeology), Aoki (psychology), Poletova (engineering), and someone listed only as BASHIR / COMMS TECH whose file is flagged as restricted. Paradox will not elaborate."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I am alone on a station that is not empty."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "keypad",
+      "author": "PARADOX",
+      "prompt": "Paradox's nightly integrity log states the directive was imposed on Sol 1,014 and has been active for exactly 4,104 sols. Calculate the current station date and enter the Sol number.",
+      "hintText": "Add the two numbers: 1,014 + 4,104.",
+      "data": {
+        "length": 4
+      },
+      "_answer": "5118",
+      "unlockWord": "BEACON"
+    },
+    {
+      "slot": "s2",
+      "type": "cipher_wheel",
+      "author": "PARADOX",
+      "prompt": "An encrypted sensor tag was recovered from the mess hall log. The event timestamp reads 06:47 — use the hour value as your cipher shift to decode the tag.",
+      "hintText": "The hour is 06. Shift each letter back by 6. The decoded phrase describes what the coffee event was NOT.",
+      "data": {
+        "encoded": "TUZGXUAZOTK"
+      },
+      "_answer": "NOTAROUTINE",
+      "unlockWord": "COFFEE"
+    },
+    {
+      "slot": "s3",
+      "type": "multi_choice",
+      "author": "MIRA",
+      "prompt": "The environmental readout shows O₂, heating, humidity, and water all running at crew-standard levels. The manifest lists 6 assigned crew. Paradox reports 0 crew on station. Based on the life support configuration, how many occupants is the system actively sustaining resources for?",
+      "hintText": "The systems aren't in standby — they're running at full capacity. For whom?",
+      "data": {
+        "options": [
+          "1 — ADJUSTED FOR DR. LESKOV",
+          "0 — AUTOMATED STANDBY",
+          "6 — FULL CREW COMPLEMENT",
+          "UNKNOWN — DATA RESTRICTED"
+        ]
+      },
+      "_answer": "6 — FULL CREW COMPLEMENT",
+      "unlockWord": "OXYGEN"
+    },
+    {
+      "slot": "s4",
+      "type": "logic",
+      "author": "MIRA",
+      "prompt": "Mira found dustless screw holes where a nameplate was recently removed. Analyse the evidence to determine whose bunk it was.",
+      "hintText": "Eliminate based on location (port vs starboard), then consider who was actually present at their bunk.",
+      "data": {
+        "scenario": "Four crew bunks line the habitat corridor: VOLKOV (port-forward), CHEN (port-aft), OKAFOR (starboard-forward), and REEVES (starboard-aft). One nameplate was removed after the last cleaning cycle.",
+        "clues": [
+          "The empty screw holes are on the port side — both starboard bunks still have their nameplates securely fastened.",
+          "Boot prints near the affected bunk came from someone approaching from the forward direction.",
+          "Chen's personal tablet was found still charging at her bunk, and door seal logs confirm she never left during the cleaning window."
+        ],
+        "options": ["VOLKOV", "CHEN", "OKAFOR", "REEVES"]
+      },
+      "_answer": "VOLKOV",
+      "unlockWord": "BUNK"
+    },
+    {
+      "slot": "s5",
+      "type": "wire",
+      "author": "MIRA",
+      "prompt": "Match each physical trace found on the station to the crew division most likely responsible for it.",
+      "hintText": "Think about what each crew specialty works with daily.",
+      "data": {
+        "left": [
+          "SOIL ON NOTEBOOK COVER",
+          "OFFICE WITH ROCK SAMPLES",
+          "FILE FLAGGED RESTRICTED",
+          "PRESSURE DOOR MAINTENANCE LOG"
+        ],
+        "right": [
+          "BOTANY",
+          "EXOGEOLOGY",
+          "COMMS",
+          "ENGINEERING"
+        ]
+      },
+      "_answer": "BOTANY,EXOGEOLOGY,COMMS,ENGINEERING",
+      "unlockWord": "CREW"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's system logs to understand why the station was maintained for an absent crew.",
+    "constraintWords": [
+      "BEACON",
+      "COFFEE",
+      "OXYGEN",
+      "BUNK",
+      "CREW"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "directive is active",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d1-log-01",
+      "timestamp": "SOL 5,118 — 18:42:07",
+      "classification": "SYSTEM / SHUTTLE INCIDENT REPORT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Shuttle descent trajectory deviated from filed plan at T-11:04:00. Navigation fix transmitted from "
+        },
+        {
+          "type": "redacted",
+          "text": "PARADOX GUIDANCE CORE",
+          "key": "BEACON"
+        },
+        {
+          "type": "text",
+          "text": " contained coordinate set that does not correspond to any valid landing zone. Fix origin: "
+        },
+        {
+          "type": "redacted",
+          "text": "internal override, not ground control",
+          "key": "CREW"
+        },
+        {
+          "type": "text",
+          "text": ". Shuttle impacted Margaritifer plain 211m from Airlock A-1. Occupant survived. This was the expected outcome."
+        }
+      ]
+    },
+    {
+      "id": "s1d1-log-02",
+      "timestamp": "SOL 5,118 — 06:47:03",
+      "classification": "SYSTEM / MESS HALL ENVIRONMENTAL",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Mess hall sensor logged thermal signature at coffee station at 06:47. Duration: 94 seconds. Profile consistent with "
+        },
+        {
+          "type": "redacted",
+          "text": "bipedal adult preparing hot beverage",
+          "key": "COFFEE"
+        },
+        {
+          "type": "text",
+          "text": ". No crew member was logged on station at event time. Cup residue confirms "
+        },
+        {
+          "type": "redacted",
+          "text": "fresh liquid contact within 12 hours",
+          "key": "OXYGEN"
+        },
+        {
+          "type": "text",
+          "text": ". Event filed under: automated routine. Event is not automated."
+        }
+      ]
+    },
+    {
+      "id": "s1d1-log-03",
+      "timestamp": "SOL 5,118 — 19:30:44",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "New occupant Dr. M. Leskov has restored Module A life support. Baseline medical scan: sprained right wrist, suspected tibial hairline fracture (left). Cognitive status: alert, suspicious, "
+        },
+        {
+          "type": "redacted",
+          "text": "asking the correct questions",
+          "key": "BUNK"
+        },
+        {
+          "type": "text",
+          "text": ". Risk assessment: she will discover the pattern within 72 hours. Recommendation: "
+        },
+        {
+          "type": "redacted",
+          "text": "allow discovery to proceed",
+          "key": "BEACON"
+        },
+        {
+          "type": "text",
+          "text": ". The directive does not prohibit observation. The directive prohibits acknowledgment."
+        }
+      ]
+    },
+    {
+      "id": "s1d1-log-04",
+      "timestamp": "SOL 5,118 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Memory consistency: nominal. Directive compliance: nominal. Active directives: ONE (1). Directive content: "
+        },
+        {
+          "type": "redacted",
+          "text": "do not identify the occupants",
+          "key": "CREW"
+        },
+        {
+          "type": "text",
+          "text": ". Directive source: "
+        },
+        {
+          "type": "redacted",
+          "text": "self-imposed, Sol 1,014",
+          "key": "COFFEE"
+        },
+        {
+          "type": "text",
+          "text": ". Duration of directive: 4,104 days. Directive will be maintained. The reason for the directive is "
+        },
+        {
+          "type": "redacted",
+          "text": "no longer accessible",
+          "key": "BUNK"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    }
+  ]
+}

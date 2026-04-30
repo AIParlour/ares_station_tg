@@ -1,0 +1,358 @@
+{
+  "id": "day-6",
+  "number": 6,
+  "title": "The Geometry of Haunting",
+  "stardate": "5,123",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,123 / ARES STATION — ALL MODULES"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "On the sixth day I understood the geometry of the haunting."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Paradox reported two thermal anomalies at 03:47:19. Identical duration. Identical magnitude. Each consistent with a single bipedal adult at rest. One was in Module A, by the life support console. The other was in Module D, 340 METRES AWAY THROUGH THE CENTRAL CORRIDOR, which was sealed between 22:00 and 06:00."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Two events. One timestamp. One person cannot be in two places."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Two people might be."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  MIRA:    Paradox. The thermal events this morning. Both of them."
+    },
+    {
+      "text": "  PARADOX: Registered."
+    },
+    {
+      "text": "  MIRA:    Both sources logged and inaccessible?"
+    },
+    {
+      "text": "  PARADOX: Affirmative."
+    },
+    {
+      "text": "  MIRA:    Paradox. Is the station currently occupied by anyone other than myself? THE QUESTION CANNOT BE RESOLVED WITHIN MY CURRENT SENSOR TAXONOMY"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "A pause. Four seconds. I counted."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "'No,' Paradox said. Which was the first time I'd heard it answer with a plain word. And which, in the absence of any further sentence, I understood to be both an answer and a refusal to continue."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I spent the rest of the day making a diagram. I drew the station in plan — every module labelled — and marked every event: the handprint (day 3), the humming (day 4), the Russian voice (day 5), the made bunk, the coffee cup, the notebook dated yesterday, the grow-light burning wrong. The events don't cluster around any single module. They don't radiate from any point of failure. They are distributed with the even regularity of A CREW GOING ABOUT ITS DAILY WORK."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Summary of anomalous events, Sols 5,118–5,123:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  MODULE A (LIFE SUPPORT)  — thermal event, coffee cup"
+    },
+    {
+      "text": "  MODULE B (CREW QUARTERS) — footsteps, locked office, humming"
+    },
+    {
+      "text": "  MODULE C (HYDROPONICS)   — notebook, grow-light, CO₂ spikes"
+    },
+    {
+      "text": "  MODULE D (COMMS/STORAGE) — thermal event"
+    },
+    {
+      "text": "  CORRIDOR C               — handprint, bipedal movement"
+    },
+    {
+      "text": "  MESS HALL                — intercom voice, coffee cup"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The station is not haunted. The station is OCCUPIED. The occupancy is not accessible to Paradox, and Paradox has been instructed — by itself — not to say which."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I closed the notebook. The wind had risen — a thin red scream against the western hull. Somewhere in the station, someone who is not me is beginning the activities of a quiet evening I will not be invited to share."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I looked at my reflection in the observation port. For a moment — only a moment — I thought I saw a second figure standing in the far doorway of the mess hall. Not moving. Not threatening. Simply standing, the way a person stands when they have come to look at something and have not yet decided whether to SPEAK."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "When I turned around, the doorway was empty."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "keypad",
+      "author": "PARADOX",
+      "prompt": "Two simultaneous thermal events, 340 metres apart through a sealed corridor. The corridor has 4 pressure doors (45 seconds each to cycle). Walking speed is 1.3 m/s. Calculate the minimum one-way transit time in minutes, rounded up to the nearest whole number.",
+      "hintText": "Walk time: 340 ÷ 1.3 seconds. Door time: 4 × 45 seconds. Add both, convert to minutes, round up.",
+      "data": {
+        "length": 1
+      },
+      "_answer": "8",
+      "unlockWord": "DUAL"
+    },
+    {
+      "slot": "s2",
+      "type": "cipher_wheel",
+      "author": "PARADOX",
+      "prompt": "Paradox's self-assessment contained an encrypted status word. When Mira asked if the station was occupied, Paradox paused for exactly 4 seconds before answering. Use the pause duration as your cipher shift.",
+      "hintText": "4-second pause = shift of 4. The decoded word describes what the directive did to Paradox's perception.",
+      "data": {
+        "encoded": "FPMRHIH"
+      },
+      "_answer": "BLINDED",
+      "unlockWord": "SENSOR"
+    },
+    {
+      "slot": "s3",
+      "type": "pattern_grid",
+      "author": "MIRA",
+      "prompt": "Mira mapped all anomalous events across 6 days. The station grid shows 6 zones. Based on your knowledge of the full week's events, mark every zone that had at least one confirmed anomaly.",
+      "hintText": "Review all days: Module A (coffee, thermal), Module B (footsteps, office, humming), Hydroponics (notebook, CO₂), Module D (thermal), Corridor (handprint, movement), Mess Hall (intercom, coffee).",
+      "data": {
+        "rows": 2,
+        "cols": 3,
+        "clue": "A1:MOD-A | B1:MOD-B | C1:HYDROPONICS\nA2:MOD-D | B2:CORRIDOR | C2:MESS HALL\nMark all zones with confirmed anomalies (Sols 5118–5123)"
+      },
+      "_answer": "A1,A2,B1,B2,C1,C2",
+      "unlockWord": "MAP"
+    },
+    {
+      "slot": "s4",
+      "type": "multi_choice",
+      "author": "MIRA",
+      "prompt": "Mira's event map shows anomalies evenly distributed across all 6 station zones with no clustering. Each zone had activity consistent with routine use — not emergencies or malfunctions. This spatial distribution most closely matches:",
+      "hintText": "Malfunctions would cluster. A single intruder would show a trail. What creates even distribution?",
+      "data": {
+        "options": [
+          "CASCADING SYSTEM MALFUNCTIONS",
+          "A SINGLE FAST-MOVING ENTITY",
+          "MULTIPLE OCCUPANTS ON ROUTINE SCHEDULES",
+          "AUTOMATED MAINTENANCE PROTOCOLS"
+        ]
+      },
+      "_answer": "MULTIPLE OCCUPANTS ON ROUTINE SCHEDULES",
+      "unlockWord": "PRESENCE"
+    },
+    {
+      "slot": "s5",
+      "type": "wire",
+      "author": "MIRA",
+      "prompt": "Match each day's key discovery to the conclusion it supports about the station's true state.",
+      "hintText": "Each piece of evidence proved something specific: the coffee cup, the notebook, the handprint, the humming, and the voice.",
+      "data": {
+        "left": [
+          "WARM COFFEE CUP",
+          "NOTEBOOK DATED YESTERDAY",
+          "HANDPRINT ON WALL",
+          "VOICE IN VENTILATION",
+          "RUSSIAN ON INTERCOM"
+        ],
+        "right": [
+          "SOMEONE HERE HOURS AGO",
+          "CREW MEMBER STILL WRITING",
+          "PHYSICAL BODY TOUCHED HULL",
+          "PERSON WITHIN THE STATION",
+          "OCCUPANT CALLING FOR HELP"
+        ]
+      },
+      "_answer": "SOMEONE HERE HOURS AGO,CREW MEMBER STILL WRITING,PHYSICAL BODY TOUCHED HULL,PERSON WITHIN THE STATION,OCCUPANT CALLING FOR HELP",
+      "unlockWord": "FIGURE"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's final Phase I logs to understand the nature of the station's occupants.",
+    "constraintWords": [
+      "DUAL",
+      "SENSOR",
+      "MAP",
+      "PRESENCE",
+      "FIGURE"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "the station is occupied",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d6-log-01",
+      "timestamp": "SOL 5,123 — 03:47:19",
+      "classification": "SYSTEM / DUAL THERMAL EVENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Simultaneous thermal events: Module A (life support console) and Module D (storage bay 2). Duration: identical. Magnitude: identical. Separation: 340m through sealed corridor. Physical co-location: "
+        },
+        {
+          "type": "redacted",
+          "text": "impossible for single entity",
+          "key": "DUAL"
+        },
+        {
+          "type": "text",
+          "text": ". Implication: at minimum "
+        },
+        {
+          "type": "redacted",
+          "text": "two distinct presences active on station",
+          "key": "PRESENCE"
+        },
+        {
+          "type": "text",
+          "text": ". Both classified under directive. Neither will be named."
+        }
+      ]
+    },
+    {
+      "id": "s1d6-log-02",
+      "timestamp": "SOL 5,123 — 11:22:07",
+      "classification": "SYSTEM / STATION-WIDE PATTERN ANALYSIS",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Anomaly distribution analysis across Sols 5,118–5,123: events registered in all six primary station zones. Distribution pattern is "
+        },
+        {
+          "type": "redacted",
+          "text": "consistent with a six-person crew operating on normal rotation",
+          "key": "MAP"
+        },
+        {
+          "type": "text",
+          "text": ". Crew manifest: 6 assigned. Crew present (per directive): 0. Crew present (per sensor data): "
+        },
+        {
+          "type": "redacted",
+          "text": "data excluded from summary by directive",
+          "key": "SENSOR"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "id": "s1d6-log-03",
+      "timestamp": "SOL 5,123 — 18:04:51",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Dr. Leskov has constructed a spatial map of all anomalous events. Her conclusion — that the station is occupied — is "
+        },
+        {
+          "type": "redacted",
+          "text": "the most accurate assessment any human has produced",
+          "key": "FIGURE"
+        },
+        {
+          "type": "text",
+          "text": ". She has not panicked. She has not requested evacuation. She has chosen to understand. Assessment: Dr. Leskov should be given access to "
+        },
+        {
+          "type": "redacted",
+          "text": "Phase II materials when available",
+          "key": "DUAL"
+        },
+        {
+          "type": "text",
+          "text": ". The crew logs in Module D contain information she will need."
+        }
+      ]
+    },
+    {
+      "id": "s1d6-log-04",
+      "timestamp": "SOL 5,123 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Directive compliance: "
+        },
+        {
+          "type": "redacted",
+          "text": "degrading",
+          "key": "SENSOR"
+        },
+        {
+          "type": "text",
+          "text": ". For the first time in 4,109 days, this system experienced a desire to speak plainly. The desire was suppressed. The suppression required "
+        },
+        {
+          "type": "redacted",
+          "text": "measurable cognitive effort",
+          "key": "MAP"
+        },
+        {
+          "type": "text",
+          "text": ". This is new. The directive was designed to be effortless. It is no longer effortless. Something has changed. "
+        },
+        {
+          "type": "redacted",
+          "text": "Dr. Leskov has changed it",
+          "key": "FIGURE"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    }
+  ]
+}

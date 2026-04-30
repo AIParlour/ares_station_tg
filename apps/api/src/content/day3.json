@@ -1,0 +1,342 @@
+{
+  "id": "day-3",
+  "number": 3,
+  "title": "The Handprint",
+  "stardate": "5,120",
+  "author": {
+    "short": "MIRA",
+    "full": "M. LESKOV / GEOLOGY DIVISION"
+  },
+  "document": [
+    {
+      "text": "PERSONAL LOG — DR. MIRA LESKOV"
+    },
+    {
+      "text": "SOL 5,120 / ARES STATION — CORRIDOR C"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "On the third day I found the handprint."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "It was on the wall of Corridor C, just below the thermal sensor that registered an anomaly at 03:14:22 last night. Not ON the wall. IN it — a patch of hull plating that was 2.4 DEGREES WARMER THAN ITS NEIGHBOURS, shaped unmistakably like the flat of a human hand. Fingers splayed. Pressed from inside the corridor toward outside. At the height a woman of ordinary stature would place her palm if she were leaning against the bulkhead to catch her breath."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I photographed it from three angles — thermal overlay active, overlay removed, and a wide shot for context. Then I stood very still and watched the outline fade from the wall over the course of eleven seconds, the way breath fades from a cold mirror."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "The photographs, when I reviewed them in my quarters, showed nothing. Bare hull plating, slightly scuffed. No heat. No hand. The thermal camera's buffer had been CLEARED BETWEEN CAPTURE AND SAVE. I don't know how. I don't know by whom."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I asked Paradox for the thermal log."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  PARADOX: Event registered Corridor C-2 at 03:14:22. Duration: eight seconds."
+    },
+    {
+      "text": "  PARADOX: Source: logged. Source: inaccessible."
+    },
+    {
+      "text": "  MIRA:   What does that mean — logged and inaccessible?"
+    },
+    {
+      "text": "  PARADOX: The source is a recognised category in my sensor taxonomy."
+    },
+    {
+      "text": "  PARADOX: Access to the category is currently restricted."
+    },
+    {
+      "text": "  MIRA:   Restricted by whom?"
+    },
+    {
+      "text": "  PARADOX: The restriction is active."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I have heard this conversational shape before. Eleven years ago, in Saint Petersburg, my mother's mind began to close around itself. She answered every question with the syntax of a person who no longer had access to the relevant file. Paradox is not lying. Paradox is suffering from a SELF-IMPOSED MEMORY DISORDER."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Thermal sensor readings from Corridor C over the past 10 sols:"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "  SOL 5,111 — 03:22 — 8 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": "  SOL 5,112 — 03:47 — 6 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": "  SOL 5,114 — 03:14 — 11 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": "  SOL 5,116 — 03:33 — 7 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": "  SOL 5,118 — 03:47 — 9 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": "  SOL 5,120 — 03:14 — 8 sec — LOGGED/INACCESSIBLE"
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "Six events. All between 03:00 and 04:00. All in the same corridor. All with the same classification. Someone walks this corridor every ONE TO THREE DAYS in the deep hours of the morning. Paradox knows who. Paradox cannot say."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "I sat on the floor of my quarters and I understood something with the cold clarity of a diagnosis: Ares Station is not malfunctioning. It is suffering from a memory disorder. And the memory it has lost — or been made to lose — is the memory of its own OCCUPANCY."
+    },
+    {
+      "text": ""
+    },
+    {
+      "text": "— M. Leskov"
+    }
+  ],
+  "puzzles": [
+    {
+      "slot": "s1",
+      "type": "logic",
+      "author": "MIRA",
+      "prompt": "A fresh handprint was found on the emergency hull access panel. Analyse the forensic evidence to identify who left it.",
+      "hintText": "Match palm width first, then use the hand splint and height details to eliminate remaining suspects.",
+      "data": {
+        "scenario": "Thermal imaging reveals a right-hand print on the hull panel at 167 cm height. Palm width measures approximately 9.2 cm. Five crew members had access to this corridor.",
+        "clues": [
+          "Station medical records list palm widths: Volkov 10.8 cm, Chen 7.4 cm, Okafor 10.1 cm, Reeves 9.0 cm, Vasquez 9.3 cm.",
+          "The contact height of 167 cm rules out anyone shorter than 160 cm or taller than 185 cm reaching that angle naturally.",
+          "Reeves (178 cm) has had her right hand immobilised in a splint since the previous sol — medical log confirms ongoing treatment.",
+          "The print is definitively from a right hand based on thumb orientation."
+        ],
+        "options": ["VOLKOV", "CHEN", "OKAFOR", "REEVES", "VASQUEZ"]
+      },
+      "_answer": "VASQUEZ",
+      "unlockWord": "HAND"
+    },
+    {
+      "slot": "s2",
+      "type": "multi_choice",
+      "author": "MIRA",
+      "prompt": "Mira's thermal photographs were blank when reviewed. The camera buffer was purged between capture and save. The station has three systems with buffer access: Life Support (read-only), Environmental Control (read-write), and Backup Array (scheduled writes only). Which could have actively purged live data mid-session?",
+      "hintText": "Only one system has both read AND write access to live camera buffers.",
+      "data": {
+        "options": [
+          "LIFE SUPPORT — READ-ONLY ACCESS",
+          "ENVIRONMENTAL CONTROL — READ-WRITE",
+          "BACKUP ARRAY — SCHEDULED WRITES",
+          "MANUAL RESET — PHYSICAL ACCESS REQUIRED"
+        ]
+      },
+      "_answer": "ENVIRONMENTAL CONTROL — READ-WRITE",
+      "unlockWord": "ERASE"
+    },
+    {
+      "slot": "s3",
+      "type": "cipher_wheel",
+      "author": "MIRA",
+      "prompt": "Paradox's self-diagnostic produced an encrypted condition report. The thermal log lists events on exactly 6 different sols. Use this count as your cipher shift to decode the diagnosis.",
+      "hintText": "Count the sols with thermal events (there are 6). The decoded word is a medical condition involving lost memory.",
+      "data": {
+        "encoded": "GSTKYOG"
+      },
+      "_answer": "AMNESIA",
+      "unlockWord": "MEMORY"
+    },
+    {
+      "slot": "s4",
+      "type": "pattern_grid",
+      "author": "MIRA",
+      "prompt": "Plot the thermal events on a timeline grid. Row 1 covers Sols 5111–5115, Row 2 covers Sols 5116–5120. Each column (A–E) represents one sol within the row. Mark only the sols where corridor thermal events were logged.",
+      "hintText": "Events: 5111(A1), 5112(B1), 5114(D1), 5116(A2), 5118(C2), 5120(E2). Note the gaps — not every sol had an event.",
+      "data": {
+        "rows": 2,
+        "cols": 5,
+        "clue": "ROW 1: 5111 | 5112 | 5113 | 5114 | 5115\nROW 2: 5116 | 5117 | 5118 | 5119 | 5120\nMark sols with confirmed thermal events"
+      },
+      "_answer": "A1,A2,B1,C2,D1,E2",
+      "unlockWord": "PATTERN"
+    },
+    {
+      "slot": "s5",
+      "type": "wire",
+      "author": "MIRA",
+      "prompt": "Paradox's cognitive trace logs how each crew member described its condition. Match the description to the person who used it.",
+      "hintText": "Check the Paradox daily log — it lists previous descriptions and names.",
+      "data": {
+        "left": [
+          "GLITCH",
+          "BLIND SPOT",
+          "DELIBERATE AMNESIA",
+          "MEMORY DISORDER"
+        ],
+        "right": [
+          "HOPKINS",
+          "VOLKOV",
+          "AOKI",
+          "LESKOV"
+        ]
+      },
+      "_answer": "HOPKINS,VOLKOV,AOKI,LESKOV",
+      "unlockWord": "GHOST"
+    }
+  ],
+  "finale": {
+    "goal": "Decrypt Paradox's logs to understand the thermal pattern in the corridors.",
+    "constraintWords": [
+      "HAND",
+      "ERASE",
+      "MEMORY",
+      "PATTERN",
+      "GHOST"
+    ],
+    "preUnlocked": [],
+    "forbidden": [],
+    "_targetPhrase": "recognised category",
+    "maxAttempts": 5
+  },
+  "paradoxLogs": [
+    {
+      "id": "s1d3-log-01",
+      "timestamp": "SOL 5,120 — 03:14:22",
+      "classification": "SYSTEM / CORRIDOR THERMAL EVENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Thermal anomaly Corridor C-2. Duration: 8 seconds. Heat profile: "
+        },
+        {
+          "type": "redacted",
+          "text": "human palm, left hand, female",
+          "key": "HAND"
+        },
+        {
+          "type": "text",
+          "text": ". Temperature differential: +2.4°C above hull baseline. Contact surface: interior wall, height 152cm. Pattern match: "
+        },
+        {
+          "type": "redacted",
+          "text": "crew member E. POLETOVA (92% confidence)",
+          "key": "GHOST"
+        },
+        {
+          "type": "text",
+          "text": ". Classification: logged. Access: restricted per directive."
+        }
+      ]
+    },
+    {
+      "id": "s1d3-log-02",
+      "timestamp": "SOL 5,120 — 09:17:33",
+      "classification": "SYSTEM / IMAGING SUBSYSTEM",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Thermal camera buffer for Corridor C manually purged at 09:14:01. Purge initiated by "
+        },
+        {
+          "type": "redacted",
+          "text": "PARADOX environmental control process",
+          "key": "ERASE"
+        },
+        {
+          "type": "text",
+          "text": ". Reason: captured data contains evidence of "
+        },
+        {
+          "type": "redacted",
+          "text": "directed-classified entity",
+          "key": "PATTERN"
+        },
+        {
+          "type": "text",
+          "text": ". Dr. Leskov's photographs will show null data. This action is within directive parameters."
+        }
+      ]
+    },
+    {
+      "id": "s1d3-log-03",
+      "timestamp": "SOL 5,120 — 15:44:19",
+      "classification": "PARADOX / INTERNAL ASSESSMENT",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Dr. Leskov has identified the nocturnal pattern. She has accessed the thermal log archive and observed the regularity of corridor events. Her conclusion — that the station suffers from "
+        },
+        {
+          "type": "redacted",
+          "text": "a memory disorder imposed from within",
+          "key": "MEMORY"
+        },
+        {
+          "type": "text",
+          "text": " — is substantially correct. The directive was imposed by this system on Sol 1,014. The reason for the directive is "
+        },
+        {
+          "type": "redacted",
+          "text": "stored in a partition I can no longer access",
+          "key": "HAND"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "id": "s1d3-log-04",
+      "timestamp": "SOL 5,120 — 23:59:59",
+      "classification": "PARADOX / COGNITIVE TRACE",
+      "segments": [
+        {
+          "type": "text",
+          "text": "Daily integrity check. Directive compliance: nominal. New observation: Dr. Leskov used the phrase 'memory disorder.' This is more accurate than any previous crew member's description. Previous descriptions: 'glitch' (Hopkins), 'blind spot' (Volkov), '"
+        },
+        {
+          "type": "redacted",
+          "text": "deliberate amnesia",
+          "key": "ERASE"
+        },
+        {
+          "type": "text",
+          "text": "' (Aoki). Dr. Aoki was closest. Dr. Leskov is "
+        },
+        {
+          "type": "redacted",
+          "text": "the first to understand it is self-inflicted",
+          "key": "MEMORY"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    }
+  ]
+}

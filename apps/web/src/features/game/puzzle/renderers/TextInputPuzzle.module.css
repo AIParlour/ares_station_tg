@@ -1,0 +1,73 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   TextInputPuzzle — Minimal free-text input with terminal aesthetic.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: auto;
+  padding-bottom: var(--spacing-md);
+}
+
+/* ── Input field ────────────────────────────────────────────────────────────── */
+
+.root__input {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.root__input::placeholder {
+  color: var(--color-text-dim);
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+}
+
+.root__input:focus {
+  border-color: var(--color-border-active);
+}
+
+.root__input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Submit button ──────────────────────────────────────────────────────────── */
+
+.root__submit {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root__submit:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+}
+
+.root__submit:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

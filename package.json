@@ -1,0 +1,24 @@
+{
+  "name": "humans-vs-ai-poc",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n API,WEB -c yellow,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm --workspace @hva/api run dev",
+    "dev:web": "npm --workspace @hva/web run dev",
+    "build": "npm run build --workspaces --if-present",
+    "build:production": "bash scripts/build-production.sh",
+    "start": "node apps/api/dist/index.js",
+    "db:migrate": "cd apps/api && npx prisma migrate deploy",
+    "db:seed": "cd apps/api && npx prisma db seed"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
