@@ -6,6 +6,17 @@ export const puzzleRouter = Router();
 
 puzzleRouter.use(requireAuth);
 
+/** Returns 00:00:00.000 UTC of the next calendar day. */
+function nextUtcMidnight(): Date {
+  const now = new Date();
+  return new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    0, 0, 0, 0,
+  ));
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/puzzle/check
 // Body: { dayId: string, slot: string, answer: string }
@@ -97,11 +108,11 @@ puzzleRouter.post("/check", async (req, res) => {
           });
 
           if (!existing) {
-            // In dev mode (no BOT_TOKEN), unlock immediately for faster testing
-            const gateMs = process.env.BOT_TOKEN
-              ? 24 * 60 * 60 * 1000  // production: 24h
-              : 0;                    // dev: instant
-            const unlockAt = new Date(Date.now() + gateMs);
+            // In dev mode (no BOT_TOKEN), unlock immediately for faster testing.
+            // In production, unlock at the next 00:00:00 UTC (midnight gate).
+            const unlockAt = process.env.BOT_TOKEN
+              ? nextUtcMidnight()
+              : new Date();
             await tx.playerDay.create({
               data: { playerId, dayId: nextDay.id, unlockedAt: unlockAt },
             });
