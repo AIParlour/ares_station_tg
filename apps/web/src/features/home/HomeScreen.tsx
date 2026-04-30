@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass, faMap, faFolderOpen, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Classification } from "../../shared/ui/Classification/Classification";
 import { useRouter } from "../../app/Router";
 import { useGame } from "../game/GameProvider";
@@ -69,25 +71,25 @@ export function HomeScreen() {
           className={`${styles.home__menu__btn} ${styles["home__menu__btn--primary"]}`}
           onClick={handleStart}
         >
-          <span className={styles.home__menu__icon}>▶</span>
+          <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
           <span className={styles.home__menu__label}>{startLabel}</span>
           <span className={styles.home__menu__sub}>DECRYPT · INTERROGATE · UNCOVER</span>
         </button>
 
         <button className={styles.home__menu__btn} onClick={handleMap}>
-          <span className={styles.home__menu__icon}>◉</span>
+          <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faMap} /></span>
           <span className={styles.home__menu__label}>STATION MAP</span>
           <span className={styles.home__menu__sub}>SECTOR SCHEMATIC · LOCK STATUS</span>
         </button>
 
         <button className={styles.home__menu__btn} onClick={handleDocuments}>
-          <span className={styles.home__menu__icon}>📁</span>
+          <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faFolderOpen} /></span>
           <span className={styles.home__menu__label}>COLLECTED DOCUMENTS</span>
           <span className={styles.home__menu__sub}>EVIDENCE ARCHIVE</span>
         </button>
 
         <button className={styles.home__menu__btn} onClick={handleShop}>
-          <span className={styles.home__menu__icon}>◈</span>
+          <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faCartShopping} /></span>
           <span className={styles.home__menu__label}>STATION STORE</span>
           <span className={styles.home__menu__sub}>HINTS · DECRYPTION AIDS</span>
         </button>

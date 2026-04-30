@@ -5,6 +5,8 @@ import { TopBar } from "../../../shared/ui/TopBar/TopBar";
 import { Classification } from "../../../shared/ui/Classification/Classification";
 import { haptic } from "../../../shared/hooks/useTelegram";
 import { askParadox, resetParadox } from "../../../shared/api/paradox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import styles from "./FinaleScreen.module.css";
 
 interface Message {
@@ -144,7 +146,7 @@ export function FinaleScreen() {
           onClick={send}
           disabled={sending || !prompt.trim()}
         >
-          ▶
+          <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </div>
     </div>

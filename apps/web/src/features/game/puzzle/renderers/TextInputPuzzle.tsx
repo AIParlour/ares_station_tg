@@ -3,6 +3,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import type { PuzzleRendererProps } from "./types";
 import styles from "./TextInputPuzzle.module.css";
 
@@ -48,7 +50,7 @@ export function TextInputPuzzle({
         {feedback === "checking"
           ? "VERIFYING…"
           : feedback === "correct"
-            ? "DECRYPTED ✓"
+            ? <><FontAwesomeIcon icon={faCircleCheck} /> DECRYPTED</>
             : "SUBMIT"}
       </button>
     </div>

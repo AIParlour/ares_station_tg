@@ -12,6 +12,8 @@ import { useRouter } from "../../../app/Router";
 import { TopBar } from "../../../shared/ui/TopBar/TopBar";
 import { Classification } from "../../../shared/ui/Classification/Classification";
 import { haptic } from "../../../shared/hooks/useTelegram";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faLockOpen, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import type { ParadoxLog, LogSegment } from "../../../shared/types/game";
 import styles from "./DocumentScreen.module.css";
 
@@ -109,7 +111,7 @@ export function DocumentScreen() {
                 onClick={() => handlePuzzle(puzzle.slot)}
               >
                 <span className={styles.day__puzzle__icon}>
-                  {solved ? "✓" : "◇"}
+                  <FontAwesomeIcon icon={solved ? faLockOpen : faLock} />
                 </span>
                 <span className={styles.day__puzzle__word}>
                   {solved ? puzzle.unlockWord : "? ? ?"}
@@ -131,7 +133,7 @@ export function DocumentScreen() {
           disabled={!allSolved}
         >
           <span className={styles.day__story__icon}>
-            {allSolved ? "▶" : "◈"}
+            <FontAwesomeIcon icon={allSolved ? faFileLines : faLock} />
           </span>
           <span className={styles.day__story__label}>
             {allSolved ? "ACCESS MISSION LOG" : `${totalPuzzles - solvedCount} KEYS REMAINING`}

@@ -3,6 +3,8 @@ import { useRouter } from "../../../app/Router";
 import { TopBar } from "../../../shared/ui/TopBar/TopBar";
 import { Classification } from "../../../shared/ui/Classification/Classification";
 import { haptic } from "../../../shared/hooks/useTelegram";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import styles from "./StoryScreen.module.css";
 
 /** Raw document line from the day JSON. Supports text + optional inline redaction. */
@@ -58,7 +60,7 @@ export function StoryScreen() {
             className={styles.story__complete__btn}
             onClick={handleComplete}
           >
-            <span className={styles.story__complete__icon}>◈</span>
+            <span className={styles.story__complete__icon}><FontAwesomeIcon icon={faFloppyDisk} /></span>
             <span>LOG ARCHIVED — COMPLETE DAY</span>
           </button>
           <div className={styles.story__complete__hint}>

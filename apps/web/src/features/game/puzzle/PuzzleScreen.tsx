@@ -9,6 +9,8 @@ import { TopBar } from "../../../shared/ui/TopBar/TopBar";
 import { Classification } from "../../../shared/ui/Classification/Classification";
 import { haptic } from "../../../shared/hooks/useTelegram";
 import { checkPuzzle } from "../../../shared/api/paradox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import type { Puzzle } from "../../../shared/types/game";
 import type { PuzzleFeedback } from "./renderers/types";
 
@@ -126,7 +128,7 @@ function PuzzleActive({ puzzle, dayId, alreadySolved, onSolve, onBack }: PuzzleA
       <TopBar onBack={onBack} title={puzzle.title ?? label} />
 
       {alreadySolved && (
-        <div className={styles.puzzle__solved}>✓ ALREADY DECRYPTED</div>
+        <div className={styles.puzzle__solved}><FontAwesomeIcon icon={faLockOpen} /> ALREADY DECRYPTED</div>
       )}
 
       <div className={styles.puzzle__prompt}>{puzzle.prompt}</div>

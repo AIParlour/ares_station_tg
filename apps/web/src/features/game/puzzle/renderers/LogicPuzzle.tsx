@@ -5,6 +5,9 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 import { useState, useEffect, useCallback } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleDot, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import type { PuzzleRendererProps } from "./types";
 import styles from "./LogicPuzzle.module.css";
 
@@ -130,8 +133,8 @@ export function LogicPuzzle({
               {eliminated.has(option)
                 ? "━"
                 : selected === option
-                  ? "◆"
-                  : "◇"}
+                  ? <FontAwesomeIcon icon={faCircleDot} />
+                  : <FontAwesomeIcon icon={faCircle} />}
             </span>
             <span className={styles.option__text}>{option}</span>
             {!locked && (
@@ -162,7 +165,7 @@ export function LogicPuzzle({
         {feedback === "checking"
           ? "ANALYSING…"
           : feedback === "correct"
-            ? "DEDUCTION CONFIRMED ✓"
+            ? <><FontAwesomeIcon icon={faCircleCheck} /> DEDUCTION CONFIRMED</>
             : "SUBMIT DEDUCTION"}
       </button>
     </div>

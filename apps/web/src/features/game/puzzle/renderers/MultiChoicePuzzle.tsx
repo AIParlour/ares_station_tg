@@ -3,6 +3,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 import { useState, useEffect, useCallback } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import type { PuzzleRendererProps } from "./types";
 import styles from "./MultiChoicePuzzle.module.css";
 
@@ -99,7 +101,7 @@ export function MultiChoicePuzzle({
         {feedback === "checking"
           ? "VERIFYING…"
           : feedback === "correct"
-            ? "CONFIRMED ✓"
+            ? <><FontAwesomeIcon icon={faCircleCheck} /> CONFIRMED</>
             : "CONFIRM"}
       </button>
     </div>

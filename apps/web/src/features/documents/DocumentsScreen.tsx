@@ -12,6 +12,8 @@ import { Classification } from "../../shared/ui/Classification/Classification";
 import { useRouter } from "../../app/Router";
 import { useGame } from "../game/GameProvider";
 import { haptic } from "../../shared/hooks/useTelegram";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import type { CompletedDay } from "../game/GameProvider";
 import styles from "./DocumentsScreen.module.css";
 
@@ -35,7 +37,7 @@ export function DocumentsScreen() {
 
       {completedDays.length === 0 ? (
         <div className={styles.documents__empty}>
-          <div className={styles.documents__empty__icon}>◈</div>
+          <div className={styles.documents__empty__icon}><FontAwesomeIcon icon={faFolderOpen} /></div>
           <div className={styles.documents__empty__title}>NO DOCUMENTS COLLECTED</div>
           <div className={styles.documents__empty__sub}>
             Complete daily investigations to unlock personal logs from Dr. Leskov.

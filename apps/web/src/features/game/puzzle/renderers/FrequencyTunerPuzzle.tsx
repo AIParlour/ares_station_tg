@@ -3,6 +3,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import type { PuzzleRendererProps } from "./types";
 import styles from "./FrequencyTunerPuzzle.module.css";
 
@@ -307,7 +309,7 @@ export function FrequencyTunerPuzzle({
         {feedback === "checking"
           ? "ANALYZING…"
           : isCorrect
-            ? "FREQUENCY LOCKED ✓"
+            ? <><FontAwesomeIcon icon={faCircleCheck} /> FREQUENCY LOCKED</>
             : "LOCK FREQUENCY"}
       </button>
     </div>

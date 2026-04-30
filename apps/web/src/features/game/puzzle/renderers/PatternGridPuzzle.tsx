@@ -3,6 +3,8 @@
    ───────────────────────────────────────────────────────────────────────────── */
 
 import { Fragment, useState, useEffect, useCallback, useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import type { PuzzleRendererProps } from "./types";
 import styles from "./PatternGridPuzzle.module.css";
 
@@ -144,7 +146,7 @@ export function PatternGridPuzzle({
         {feedback === "checking"
           ? "ANALYSING…"
           : feedback === "correct"
-            ? "PATTERN ACCEPTED ✓"
+            ? <><FontAwesomeIcon icon={faCircleCheck} /> PATTERN ACCEPTED</>
             : "SUBMIT PATTERN"}
       </button>
     </div>

@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import styles from "./TopBar.module.css";
 
 interface TopBarProps {
@@ -13,7 +15,7 @@ export function TopBar({ onBack, title, right }: TopBarProps) {
       <div className={styles.topbar__left}>
         {onBack && (
           <button className={styles.topbar__back} onClick={onBack} aria-label="Back">
-            ‹
+            <FontAwesomeIcon icon={faChevronLeft} />
           </button>
         )}
       </div>
