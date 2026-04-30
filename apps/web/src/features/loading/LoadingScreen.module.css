@@ -68,8 +68,8 @@
   position: absolute;
   bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.15em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }

@@ -24,7 +24,7 @@
 
 .map__title {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.22em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -54,9 +54,9 @@
   align-items: center;
   gap: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
@@ -215,7 +215,7 @@
   letter-spacing: 0.14em;
   text-anchor: middle;
   dominant-baseline: middle;
-  fill: var(--color-text-dim);
+  fill: var(--color-text-muted);
   pointer-events: none;
   user-select: none;
 }
@@ -294,7 +294,7 @@
 
 .map__detail__subtitle {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -307,7 +307,7 @@
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   padding: 0.25rem 0.5rem;
   cursor: pointer;
@@ -360,7 +360,7 @@
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.08em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   border-left: 2px solid var(--color-border);
   padding-left: var(--spacing-sm);
@@ -369,7 +369,7 @@
 
 .map__detail__event {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   color: var(--color-text-primary);
   text-transform: uppercase;

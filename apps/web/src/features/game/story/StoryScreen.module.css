@@ -28,7 +28,7 @@
 
 .story__meta {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -94,9 +94,9 @@
 
 .story__complete__hint {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-align: center;
   margin-top: var(--spacing-xs);
 }
@@ -111,7 +111,7 @@
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
@@ -119,9 +119,9 @@
   padding: var(--spacing-lg);
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.16em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   border-top: 1px solid var(--color-border);
 }

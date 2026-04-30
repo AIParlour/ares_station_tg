@@ -25,7 +25,7 @@
 
 .logs__intro__subtitle {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -43,16 +43,16 @@
 
 .logs__keyring__label {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   margin-right: 0.25rem;
 }
 
 .logs__keyring__word {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--color-text-primary);
@@ -65,9 +65,9 @@
 
 .logs__keyring__empty {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -88,9 +88,9 @@
   justify-content: space-between;
   gap: var(--spacing-sm);
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   margin-bottom: var(--spacing-xs);
 }
@@ -194,7 +194,7 @@
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   text-align: center;
 }

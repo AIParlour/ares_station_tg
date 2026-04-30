@@ -46,9 +46,9 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.06em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   user-select: none;
 }
 

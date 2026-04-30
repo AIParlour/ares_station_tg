@@ -140,10 +140,10 @@
 }
 
 .root__label {
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 

@@ -23,7 +23,7 @@
 
 .home__subtitle {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -32,9 +32,9 @@
 
 .home__sol {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   margin-top: var(--spacing-sm);
 }
 
@@ -124,7 +124,7 @@
 
 .home__menu__sub {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
 }
@@ -133,9 +133,9 @@
 
 .home__footer {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.14em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-align: center;
   padding: 0 var(--spacing-lg);
   text-transform: uppercase;

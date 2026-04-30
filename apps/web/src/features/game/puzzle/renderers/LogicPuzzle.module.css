@@ -21,9 +21,9 @@
 
 .scenario__label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   margin-bottom: var(--spacing-xs);
 }
 
@@ -46,9 +46,9 @@
 
 .clues__label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   margin-bottom: 2px;
 }
 
@@ -66,7 +66,7 @@
 
 .clue__num {
   flex-shrink: 0;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   min-width: 1.2em;
 }
 
@@ -84,9 +84,9 @@
 
 .options__label {
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.18em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   margin-bottom: 2px;
 }
 
@@ -120,7 +120,7 @@
 
 .option__indicator {
   flex-shrink: 0;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   font-size: 0.65rem;
   transition: color 0.15s;
 }
@@ -142,7 +142,7 @@
   justify-content: center;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;

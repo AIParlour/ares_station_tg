@@ -30,7 +30,7 @@
 }
 
 .root__input::placeholder {
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   letter-spacing: 0.2em;
   font-size: 0.7rem;
 }

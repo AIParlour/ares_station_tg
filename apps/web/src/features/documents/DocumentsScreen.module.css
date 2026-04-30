@@ -24,7 +24,7 @@
 
 .documents__empty__icon {
   font-size: 2rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   opacity: 0.4;
 }
 
@@ -41,7 +41,7 @@
   font-family: var(--font-mono);
   font-size: 0.6rem;
   line-height: 1.6;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   max-width: 16rem;
 }
 
@@ -56,7 +56,7 @@
 
 .documents__list__header {
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: var(--font-size-xs);
   font-weight: 700;
   letter-spacing: 0.16em;
   color: var(--color-text-muted);
@@ -99,9 +99,9 @@
   grid-row: 1;
   grid-column: 1;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
@@ -120,7 +120,7 @@
   grid-row: 2;
   grid-column: 1 / -1;
   font-family: var(--font-mono);
-  font-size: 0.5rem;
+  font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -133,7 +133,7 @@
   font-family: var(--font-mono);
   font-size: 0.45rem;
   letter-spacing: 0.1em;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
   text-transform: uppercase;
 }
 
