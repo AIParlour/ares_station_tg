@@ -24,7 +24,7 @@ export function DocumentsScreen() {
     // Can only re-read the currently loaded day
     if (state.day && state.day.dayId === entry.dayId) {
       haptic("impact", "light");
-      navigate({ name: "story" });
+      navigate({ name: "story", params: { readOnly: true } });
     }
   };
 

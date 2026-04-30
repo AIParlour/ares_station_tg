@@ -22,6 +22,21 @@ export function HomeScreen() {
     navigate({ name: "document" });
   };
 
+  const hasStarted =
+    state.completedDays.length > 0 || Object.keys(state.solved).length > 0;
+
+  const allSolved =
+    state.status === "ready" &&
+    !!state.day &&
+    state.day.puzzles.length > 0 &&
+    state.day.puzzles.every((p) => state.solved[p.slot]);
+
+  const startLabel = allSolved
+    ? "CONTINUE INVESTIGATION TOMORROW"
+    : hasStarted
+    ? "CONTINUE INVESTIGATION"
+    : "BEGIN INVESTIGATION";
+
   const handleDocuments = () => {
     haptic("selection");
     navigate({ name: "documents" });
@@ -49,27 +64,13 @@ export function HomeScreen() {
 
       <div className={styles.home__divider} />
 
-      <div className={styles.home__briefing}>
-        <p className={styles.home__briefing__line}>
-          CREW STATUS: <span className={styles["home__briefing__value--critical"]}>20 DECEASED</span>
-        </p>
-        <p className={styles.home__briefing__line}>
-          CAUSE: <span className={styles["home__briefing__value--unknown"]}>UNDER INVESTIGATION</span>
-        </p>
-        <p className={styles.home__briefing__line}>
-          PARADOX ACCESS: <span className={styles["home__briefing__value--active"]}>ONLINE</span>
-        </p>
-      </div>
-
-      <div className={styles.home__divider} />
-
       <nav className={styles.home__menu}>
         <button
           className={`${styles.home__menu__btn} ${styles["home__menu__btn--primary"]}`}
           onClick={handleStart}
         >
           <span className={styles.home__menu__icon}>▶</span>
-          <span className={styles.home__menu__label}>BEGIN INVESTIGATION</span>
+          <span className={styles.home__menu__label}>{startLabel}</span>
           <span className={styles.home__menu__sub}>DECRYPT · INTERROGATE · UNCOVER</span>
         </button>
 

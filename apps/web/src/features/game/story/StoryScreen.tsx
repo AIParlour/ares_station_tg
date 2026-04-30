@@ -1,14 +1,3 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   StoryScreen — Dr. Leskov's personal log for the day.
-
-   Unlocked as a reward after all puzzles are solved.
-   Shows the full document text with redacted fields revealed inline (no
-   special highlighting — reads as a clean, continuous narrative).
-
-   "COMPLETE DAY" button at the bottom archives the log to the player's
-   collected documents and returns to the home screen.
-   ───────────────────────────────────────────────────────────────────────────── */
-
 import { useGame } from "../GameProvider";
 import { useRouter } from "../../../app/Router";
 import { TopBar } from "../../../shared/ui/TopBar/TopBar";
@@ -25,7 +14,8 @@ interface RawDocLine {
 
 export function StoryScreen() {
   const { state, completeDay } = useGame();
-  const { replace } = useRouter();
+  const { current, replace } = useRouter();
+  const readOnly = current.params?.readOnly === true;
 
   if (state.status !== "ready" || !state.day) {
     return (
@@ -62,18 +52,20 @@ export function StoryScreen() {
         ))}
       </div>
 
-      <div className={styles.story__complete}>
-        <button
-          className={styles.story__complete__btn}
-          onClick={handleComplete}
-        >
-          <span className={styles.story__complete__icon}>◈</span>
-          <span>LOG ARCHIVED — COMPLETE DAY</span>
-        </button>
-        <div className={styles.story__complete__hint}>
-          This log will be saved to your collected documents.
+      {!readOnly && (
+        <div className={styles.story__complete}>
+          <button
+            className={styles.story__complete__btn}
+            onClick={handleComplete}
+          >
+            <span className={styles.story__complete__icon}>◈</span>
+            <span>LOG ARCHIVED — COMPLETE DAY</span>
+          </button>
+          <div className={styles.story__complete__hint}>
+            This log will be saved to your collected documents.
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.story__footer}>
         END OF LOG — SOL {day.stardate}
@@ -82,15 +74,11 @@ export function StoryScreen() {
   );
 }
 
-/* ── Single line renderer ────────────────────────────────────────────────────── */
-
 function StoryLine({ line }: { line: RawDocLine }) {
-  // Empty line = paragraph break
   if (!line.text && !line.redact) {
     return <div className={styles.story__break} />;
   }
 
-  // Line with inline redaction → show revealed text seamlessly (no highlight)
   if (line.redact) {
     return (
       <p className={styles.story__line}>
@@ -98,7 +86,5 @@ function StoryLine({ line }: { line: RawDocLine }) {
       </p>
     );
   }
-
-  // Plain text line
   return <p className={styles.story__line}>{line.text}</p>;
 }
