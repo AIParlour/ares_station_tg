@@ -7,6 +7,7 @@
      3. "View Full Log" button — unlocks after all puzzles solved
    ───────────────────────────────────────────────────────────────────────────── */
 
+import { useEffect, useState } from "react";
 import { useGame } from "../GameProvider";
 import { useRouter } from "../../../app/Router";
 import { TopBar } from "../../../shared/ui/TopBar/TopBar";
@@ -18,8 +19,29 @@ import type { ParadoxLog, LogSegment } from "../../../shared/types/game";
 import styles from "./DocumentScreen.module.css";
 
 export function DocumentScreen() {
-  const { state } = useGame();
+  const { state, clearPendingReveal } = useGame();
   const { navigate, goBack } = useRouter();
+
+  /* Snapshot the freshly-unlocked key on mount. After we read it we wipe
+     it from the provider so navigating back later won't re-trigger the
+     decrypt animation on an already-revealed segment. */
+  const [animateKey, setAnimateKey] = useState<string | null>(state.pendingReveal);
+
+  useEffect(() => {
+    if (state.pendingReveal) {
+      setAnimateKey(state.pendingReveal);
+      clearPendingReveal();
+    }
+  }, [state.pendingReveal, clearPendingReveal]);
+
+  /* Drop the animate flag once the keyframes have finished — keeps the
+     segment in its final unlocked styling and prevents the animation from
+     replaying on subsequent renders. Total animation length: ~1.6s. */
+  useEffect(() => {
+    if (!animateKey) return;
+    const t = setTimeout(() => setAnimateKey(null), 1700);
+    return () => clearTimeout(t);
+  }, [animateKey]);
 
   /* ── Loading / Error ──────────────────────────────────────────────────────── */
 
@@ -89,6 +111,7 @@ export function DocumentScreen() {
                 key={log.id}
                 log={log}
                 unlocked={unlocked}
+                animateKey={animateKey}
               />
             ))
           )}
@@ -176,9 +199,11 @@ function Keyring({ unlockedWords }: { unlockedWords: string[] }) {
 function LogEntry({
   log,
   unlocked,
+  animateKey,
 }: {
   log: ParadoxLog;
   unlocked: Set<string>;
+  animateKey: string | null;
 }) {
   return (
     <article className={styles.day__log__entry}>
@@ -192,6 +217,7 @@ function LogEntry({
             key={`${log.id}-${i}`}
             segment={seg}
             unlocked={unlocked}
+            animateKey={animateKey}
           />
         ))}
       </p>
@@ -201,25 +227,92 @@ function LogEntry({
 
 /* ── Segment ─────────────────────────────────────────────────────────────────── */
 
+const GLITCH_DURATION_MS = 380;
+const GLITCH_CHARS = "█▓▒░@#%&*?!=+/\\<>[]{};:";
+
 function Segment({
   segment,
   unlocked,
+  animateKey,
 }: {
   segment: LogSegment;
   unlocked: Set<string>;
+  animateKey: string | null;
 }) {
   if (segment.type === "text") {
     return <span>{segment.text}</span>;
   }
 
   const isRevealed = unlocked.has(segment.key);
-  const cls = isRevealed
-    ? `${styles.day__redaction} ${styles["day__redaction--unlocked"]}`
-    : `${styles.day__redaction} ${styles["day__redaction--locked"]}`;
+  const isAnimating = isRevealed && animateKey === segment.key;
+
+  if (!isRevealed) {
+    return (
+      <span className={`${styles.day__redaction} ${styles["day__redaction--locked"]}`} />
+    );
+  }
+
+  if (isAnimating) {
+    return <AnimatedReveal text={segment.text} />;
+  }
+
+  return (
+    <span className={`${styles.day__redaction} ${styles["day__redaction--unlocked"]}`}>
+      {segment.text}
+    </span>
+  );
+}
+
+/* Glitch flash → typewriter reveal. Used once per freshly-decrypted segment. */
+function AnimatedReveal({ text }: { text: string }) {
+  const [phase, setPhase] = useState<"glitch" | "typing" | "done">("glitch");
+  const [glitchText, setGlitchText] = useState("");
+  const [typedCount, setTypedCount] = useState(0);
+
+  /* Glitch phase: spew random characters for ~380ms */
+  useEffect(() => {
+    if (phase !== "glitch") return;
+    const interval = window.setInterval(() => {
+      let s = "";
+      for (let i = 0; i < text.length; i++) {
+        s += GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
+      }
+      setGlitchText(s);
+    }, 45);
+    const stop = window.setTimeout(() => {
+      window.clearInterval(interval);
+      setPhase("typing");
+    }, GLITCH_DURATION_MS);
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(stop);
+    };
+  }, [phase, text]);
+
+  /* Typewriter phase: reveal one character at a time */
+  useEffect(() => {
+    if (phase !== "typing") return;
+    if (typedCount >= text.length) {
+      setPhase("done");
+      return;
+    }
+    const t = window.setTimeout(() => setTypedCount((n) => n + 1), 35);
+    return () => window.clearTimeout(t);
+  }, [phase, typedCount, text]);
+
+  const cls =
+    phase === "glitch"
+      ? `${styles.day__redaction} ${styles["day__redaction--glitching"]}`
+      : `${styles.day__redaction} ${styles["day__redaction--decrypting"]}`;
+
+  if (phase === "glitch") {
+    return <span className={cls}>{glitchText}</span>;
+  }
 
   return (
     <span className={cls}>
-      {isRevealed ? segment.text : ""}
+      {text.slice(0, typedCount)}
+      {phase === "typing" && <span className={styles.day__redaction__cursor}>▌</span>}
     </span>
   );
 }

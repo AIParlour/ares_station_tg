@@ -67,10 +67,24 @@
 
 ### Phase 7 — Pre-Launch 🔲 (Current)
 - [x] Local end-to-end playtest (Day 1 → Day 6) — 84/84 checks pass, see `docs/PLAYTEST.md`
+- [x] Start button label logic (BEGIN / CONTINUE / CONTINUE TOMORROW + disabled state)
+- [x] Archive button hidden in read-only story mode
+- [x] Day gate changed to next UTC midnight (was personal +24h)
+- [x] Font Awesome icon system — all unicode glyphs/emoji replaced with semantic FA icons
+- [x] Animations (screen transitions, typewriter reveal, success states) — see Phase 7b
 - [ ] Deploy to Render + Neon (free tier)
 - [ ] Register Telegram Mini App with BotFather
 - [ ] Verify cold start behavior and seed data
 - [ ] Smoke test via Telegram on mobile device
+
+### Phase 7b — Animations ✅
+- [x] Page transitions: cross-fade between route changes (220ms wrapper fade-in keyed off route)
+- [x] Screen entrance: staggered fade-in on HomeScreen menu items (60/140/220/300ms)
+- [x] Puzzle solve: success flash — green border pulse + radial flash overlay before nav
+- [x] Redaction unlock: glitch flash → typewriter reveal (replaces simple amber→green fade)
+- [x] Typewriter reveal on StoryScreen body text (16ms/char, tap-to-skip, bypassed on `readOnly`)
+- [x] Day complete: full-screen "case file CLASSIFIED" stamp ceremony before archiving
+- [x] Intro sequence (first-time only): shuttle descent → station outline draws → lights flicker → Paradox cold open
 
 ---
 

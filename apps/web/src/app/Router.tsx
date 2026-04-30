@@ -19,6 +19,7 @@ import { getTelegramWebApp } from "../shared/hooks/useTelegram";
 
 export type RouteName =
   | "loading"
+  | "intro"
   | "home"
   | "document"
   | "puzzle"

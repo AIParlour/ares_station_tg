@@ -34,6 +34,11 @@ interface GameState {
   unlockedWords: string[];
   /** days the player has completed (story read + day archived) */
   completedDays: CompletedDay[];
+  /** Last unlock-word the player just solved — drives the redaction
+   *  reveal animation on DocumentScreen. Cleared by `clearPendingReveal()`
+   *  once the animation has played. Survives the navigation hop from
+   *  PuzzleScreen → DocumentScreen because it lives in the provider. */
+  pendingReveal: string | null;
 }
 
 const COMPLETED_DAYS_KEY = "ares_completed_days";
@@ -60,6 +65,7 @@ const initialState: GameState = {
   solved: {},
   unlockedWords: [],
   completedDays: loadCompletedDays(),
+  pendingReveal: null,
 };
 
 /* ── Actions ─────────────────────────────────────────────────────────────────── */
@@ -69,6 +75,7 @@ type GameAction =
   | { type: "FETCH_OK"; day: Day; solved?: Record<string, boolean>; unlockedWords?: string[] }
   | { type: "FETCH_ERR"; error: string }
   | { type: "SOLVE_PUZZLE"; slot: string; unlockWord: string }
+  | { type: "CLEAR_PENDING_REVEAL" }
   | { type: "COMPLETE_DAY" };
 
 function reducer(state: GameState, action: GameAction): GameState {
@@ -91,8 +98,13 @@ function reducer(state: GameState, action: GameAction): GameState {
         ...state,
         solved: { ...state.solved, [action.slot]: true },
         unlockedWords: [...state.unlockedWords, action.unlockWord],
+        pendingReveal: action.unlockWord,
       };
     }
+    case "CLEAR_PENDING_REVEAL":
+      return state.pendingReveal === null
+        ? state
+        : { ...state, pendingReveal: null };
     case "COMPLETE_DAY": {
       if (!state.day) return state;
       const already = state.completedDays.some((d) => d.dayId === state.day!.dayId);
@@ -117,6 +129,7 @@ interface GameContextValue {
   state: GameState;
   solvePuzzle: (slot: string, unlockWord: string) => void;
   completeDay: () => void;
+  clearPendingReveal: () => void;
   reload: () => void;
 }
 
@@ -171,8 +184,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "COMPLETE_DAY" });
   };
 
+  const clearPendingReveal = () => {
+    dispatch({ type: "CLEAR_PENDING_REVEAL" });
+  };
+
   return (
-    <GameContext.Provider value={{ state, solvePuzzle, completeDay, reload: load }}>
+    <GameContext.Provider
+      value={{ state, solvePuzzle, completeDay, clearPendingReveal, reload: load }}
+    >
       {children}
     </GameContext.Provider>
   );

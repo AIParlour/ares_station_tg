@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "../../app/Router";
 import { useTelegramAuth } from "../../shared/hooks/useTelegramAuth";
+import { hasSeenIntro } from "../intro/IntroScreen";
 import styles from "./LoadingScreen.module.css";
 
 export function LoadingScreen() {
@@ -9,7 +10,8 @@ export function LoadingScreen() {
 
   useEffect(() => {
     if (auth.status === "ok") {
-      replace({ name: "home" });
+      // First-time players get the cold-open intro before the home menu.
+      replace({ name: hasSeenIntro() ? "home" : "intro" });
     }
     // error stays on loading screen — show message below
   }, [auth.status, replace]);

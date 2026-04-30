@@ -92,6 +92,37 @@
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s, background 0.15s;
+  /* Staggered fade-in — each subsequent button delays via :nth-child below. */
+  opacity: 0;
+  animation: home-menu-in 280ms ease-out both;
+}
+
+.home__menu__btn:nth-child(1) { animation-delay: 60ms;  }
+.home__menu__btn:nth-child(2) { animation-delay: 140ms; }
+.home__menu__btn:nth-child(3) { animation-delay: 220ms; }
+.home__menu__btn:nth-child(4) { animation-delay: 300ms; }
+
+@keyframes home-menu-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.home__title {
+  /* Header fades in just before the menu items. */
+  animation: home-title-in 320ms ease-out both, ares-pulse 3s ease-in-out infinite 320ms;
+}
+
+@keyframes home-title-in {
+  from { opacity: 0; letter-spacing: 0.5em; }
+  to   { opacity: 1; letter-spacing: 0.3em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home__menu__btn,
+  .home__title {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .home__menu__btn:hover,

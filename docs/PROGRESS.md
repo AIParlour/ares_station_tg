@@ -4,6 +4,126 @@ Running log of what was built, changed, and fixed — newest entries first.
 
 ---
 
+## 2026-05-01 — Phase 7b Animations
+
+All 7 Phase 7b animations are in. Brutalist sci-fi aesthetic preserved — every
+beat reads as a terminal booting up or a system responding. Reduced-motion
+`@media (prefers-reduced-motion: reduce)` fallbacks in every new keyframe
+block. TypeScript builds clean (web + api), playtest still 84/84, Vite
+production build succeeds (88 modules → 296 KB JS / 74 KB CSS).
+
+### Added — Intro sequence (first-time only)
+
+- **`features/intro/IntroScreen.tsx` + `.module.css`** — cold-open scene:
+  stars fade in (0.2s) → Mars horizon rises (0.6s) → shuttle streaks down
+  with trail (1.4s) → impact flash at 4.2°N 137.4°E (2.55s) → station
+  outline draws itself via `stroke-dashoffset` (3–4s) → 13 internal
+  lights flicker on cluster-by-cluster (4.6–5.4s) → 8-line Paradox cold
+  open types in starting at 5.4s.
+- Total runtime ~18s, skippable on tap. Persists `ares_intro_seen=1` in
+  localStorage on completion or skip.
+- **`LoadingScreen.tsx`** — after auth, routes to `intro` if not seen,
+  else `home`. New `intro` RouteName added to `Router.tsx`.
+
+### Added — Page transitions
+
+- **`app/Screen.module.css`** + wrapper in `App.tsx` — every route is
+  rendered inside a keyed div whose CSS `screen-fade-in` keyframe (220ms,
+  ease-out, with subtle 2px Y translate) replays on every navigation.
+  `key` includes serialized route params so two `puzzle` routes with
+  different slots also cross-fade.
+
+### Added — HomeScreen staggered entrance
+
+- **`HomeScreen.module.css`** — four nav buttons fade in left-to-right
+  via `nth-child` `animation-delay` (60ms / 140ms / 220ms / 300ms). Title
+  also gets a one-shot letter-spacing wipe before the existing `ares-pulse`
+  resumes.
+
+### Added — Typewriter reveal on StoryScreen
+
+- **`StoryScreen.tsx`** — replaced static body with `TypewriterBody` that
+  schedules `chars` and `lineIndex` state via `setTimeout`. 16ms per
+  character, 110ms paragraph pause, 50ms break-line pause. Cursor
+  `▌` blinks at the active position.
+- Tapping anywhere in the body sets a `skippedRef` flag and reveals the
+  remaining lines instantly. `TAP TO REVEAL` hint appears 1.2s in.
+- `readOnly: true` (re-reads from Collected Documents) bypasses the
+  animation — `lineIndex` initializes to `lines.length` on mount.
+
+### Added — Day complete ceremony
+
+- **`StoryScreen.tsx` `DayCompleteOverlay`** — full-screen overlay shown
+  when player taps "LOG ARCHIVED — COMPLETE DAY". Sequence: panel slides
+  up (100ms delay) → SOL line (480ms) → title (600ms) → red CLASSIFIED
+  stamp slams in rotated −6° via overshoot easing (900ms) → "FILED —
+  EVIDENCE ARCHIVE" (1500ms). After 2.4s total, calls `completeDay()`
+  + `replace({ name: "home" })`.
+
+### Added — Redaction unlock animation
+
+- **`GameProvider.tsx`** — added `pendingReveal: string | null` to game
+  state, `clearPendingReveal()` action, and `SOLVE_PUZZLE` now stamps the
+  unlock word as the pending reveal. Survives the navigation hop from
+  PuzzleScreen → DocumentScreen because it lives in the provider.
+- **`DocumentScreen.tsx` `AnimatedReveal`** — when a segment's key
+  matches the pending reveal, a glitch phase spews random characters
+  (`█▓▒░@#%&*?!=+/\<>[]{};:`) at 45ms intervals for 380ms with subpixel
+  jitter, then transitions to a typewriter phase (35ms/char) that types
+  out the real text in green with a blinking cursor. After ~1.6s the
+  parent drops the `animateKey` and the segment renders with the plain
+  unlocked styling.
+- Replaces the previous 0.6s amber→green fade in `day-reveal`.
+
+### Added — Puzzle solve flash
+
+- **`PuzzleScreen.tsx`** — on `feedback === "correct"` the wrapper gets
+  `puzzle--solved-flash` (700ms inset green box-shadow border pulse) and
+  a fixed `puzzle__flash` overlay with a radial green gradient mounts
+  (900ms fade-in → fade-out). `puzzle__feedback__correct` text now slides
+  in with a green border instead of just the old `ares-pulse` opacity.
+
+### Technical
+
+- All new keyframes are scoped per component CSS module (no `global.css`
+  pollution). The two existing globals (`ares-pulse`, `ares-blink`) are
+  reused where appropriate (HomeScreen title, intro skip hint).
+- `useGame()` API expanded with `clearPendingReveal()`. Existing callers
+  that don't need it are unaffected (TS-checked).
+
+---
+
+## 2026-04-30 — Phase 7 UX Fixes & Icon System
+
+### Changed
+
+- **HomeScreen.tsx** — Start button label is now state-driven:
+  - No progress → `BEGIN INVESTIGATION`
+  - Any solved puzzle or completed day → `CONTINUE INVESTIGATION`
+  - All current-day puzzles solved → `CONTINUE INVESTIGATION TOMORROW` (button disabled until next day unlocks)
+- **puzzle.ts** — Day gate changed from `now + 24h` (personal-synchronous) to `next 00:00:00 UTC`. Simpler, predictable, shared cadence for all players. Dev mode (no `BOT_TOKEN`) still unlocks instantly.
+- **StoryScreen.tsx** — "LOG ARCHIVED — COMPLETE DAY" button hidden when `readOnly: true` param is set (re-reading from Collected Documents)
+- **DocumentsScreen.tsx** — Archive entries now navigate with `readOnly: true` param so the complete button is suppressed
+
+### Added
+
+- **Font Awesome icon system** — Installed `@fortawesome/fontawesome-svg-core`, `free-solid-svg-icons`, `free-regular-svg-icons`, `react-fontawesome` as workspace-level deps.
+- All unicode glyphs and emoji replaced with meaningful FA icons:
+  - `‹` → `faChevronLeft` (TopBar back)
+  - `▶` → `faMagnifyingGlass` (investigation button — it's a search, not media playback)
+  - `◉` → `faMap` (station map)
+  - `📁` → `faFolderOpen` (collected documents)
+  - `◈` → `faCartShopping` (station store)
+  - puzzle solved/unsolved → `faLockOpen` / `faLock`
+  - story unlock button → `faFileLines` / `faLock`
+  - archive button → `faFloppyDisk`
+  - finale send → `faPaperPlane`
+  - already-decrypted banner → `faLockOpen`
+  - submit success states → `faCircleCheck`
+  - LogicPuzzle radio → `faCircleDot` (selected) / `faCircle` regular (unselected)
+
+---
+
 ## 2026-04-30 — Phase 7 Playtest (Task 1 Complete)
 
 ### Validated

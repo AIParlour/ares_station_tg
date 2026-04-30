@@ -122,8 +122,12 @@ function PuzzleActive({ puzzle, dayId, alreadySolved, onSolve, onBack }: PuzzleA
     onSubmit: handleSubmit,
   };
 
+  const wrapperClass = `${styles.puzzle} ${
+    feedback === "correct" ? styles["puzzle--solved-flash"] : ""
+  }`;
+
   return (
-    <div className={styles.puzzle}>
+    <div className={wrapperClass}>
       <Classification level="standard" label={`STATION PUZZLE // ${label}`} />
       <TopBar onBack={onBack} title={puzzle.title ?? label} />
 
@@ -145,6 +149,11 @@ function PuzzleActive({ puzzle, dayId, alreadySolved, onSolve, onBack }: PuzzleA
         <div className={styles.puzzle__feedback__correct}>
           SIGNAL DECRYPTED // KEY RECORDED
         </div>
+      )}
+
+      {/* Full-screen flash overlay on correct answer. */}
+      {feedback === "correct" && (
+        <div className={styles.puzzle__flash} aria-hidden="true" />
       )}
     </div>
   );

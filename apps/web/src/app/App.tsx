@@ -16,7 +16,9 @@ import { ShopScreen }      from "../features/shop/ShopScreen";
 import { MapScreen }       from "../features/map/MapScreen";
 import { LogBrowserScreen } from "../features/game/logs/LogBrowserScreen";
 import { StoryScreen }      from "../features/game/story/StoryScreen";
+import { IntroScreen }      from "../features/intro/IntroScreen";
 import { initTelegramWebApp } from "../shared/hooks/useTelegram";
+import screenStyles from "./Screen.module.css";
 
 /* ── TG boot (runs once at app start) ──────────────────────────────────────── */
 
@@ -29,11 +31,10 @@ function TelegramBoot() {
 
 /* ── Screen switcher ────────────────────────────────────────────────────────── */
 
-function Screens() {
-  const { current } = useRouter();
-
-  switch (current.name) {
+function renderScreen(name: string) {
+  switch (name) {
     case "loading":   return <LoadingScreen />;
+    case "intro":     return <IntroScreen />;
     case "home":      return <HomeScreen />;
     case "document":  return <DocumentScreen />;
     case "puzzle":    return <PuzzleScreen />;
@@ -45,6 +46,31 @@ function Screens() {
     case "story":     return <StoryScreen />;
     default:          return <LoadingScreen />;
   }
+}
+
+/**
+ * Screens — wraps the current route in a keyed div so React re-mounts
+ * the wrapper on every navigation. The wrapper's CSS keyframe fade-in
+ * therefore replays on each route change → soft cross-fade transitions
+ * rather than hard cuts.
+ */
+function Screens() {
+  const { current } = useRouter();
+  // Key includes params so navigating between two `puzzle` routes with
+  // different slots also triggers the fade.
+  const key = `${current.name}::${stableKey(current.params)}`;
+
+  return (
+    <div key={key} className={screenStyles.screen}>
+      {renderScreen(current.name)}
+    </div>
+  );
+}
+
+function stableKey(params?: Record<string, unknown>): string {
+  if (!params) return "";
+  const keys = Object.keys(params).sort();
+  return keys.map((k) => `${k}=${String(params[k])}`).join("&");
 }
 
 /* ── Root ───────────────────────────────────────────────────────────────────── */

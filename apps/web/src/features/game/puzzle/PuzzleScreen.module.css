@@ -61,5 +61,61 @@
 
 .puzzle__feedback__correct {
   color: #86efac;
-  animation: ares-pulse 1s ease-in-out;
+  animation: puzzle-correct-text 0.6s ease-out both;
+  border: 1px solid rgba(134, 239, 172, 0.35);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+@keyframes puzzle-correct-text {
+  0%   { opacity: 0; transform: translateY(4px); border-color: rgba(134, 239, 172, 0); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); border-color: rgba(134, 239, 172, 0.35); }
+}
+
+/* ── Solve flash ─────────────────────────────────────────────────────────────
+   When feedback="correct", the wrapper gets `puzzle--solved-flash` and a
+   full-bleed overlay `puzzle__flash` mounts. The wrapper border pulses, the
+   overlay fades a soft green flash across the screen, then fades to nothing.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.puzzle--solved-flash {
+  position: relative;
+  animation: puzzle-border-pulse 0.7s ease-out both;
+}
+
+@keyframes puzzle-border-pulse {
+  0%   { box-shadow: inset 0 0 0 0 rgba(134, 239, 172, 0); }
+  20%  { box-shadow: inset 0 0 0 2px rgba(134, 239, 172, 0.6); }
+  100% { box-shadow: inset 0 0 0 0 rgba(134, 239, 172, 0); }
+}
+
+.puzzle__flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(134, 239, 172, 0.22) 0%,
+    rgba(134, 239, 172, 0.08) 35%,
+    rgba(134, 239, 172, 0) 70%
+  );
+  opacity: 0;
+  z-index: 50;
+  animation: puzzle-flash 0.9s ease-out both;
+}
+
+@keyframes puzzle-flash {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puzzle--solved-flash,
+  .puzzle__flash,
+  .puzzle__feedback__correct {
+    animation: none;
+  }
+  .puzzle__flash { display: none; }
 }

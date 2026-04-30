@@ -126,3 +126,48 @@ Applied via `data-theme` attribute on `<html>`, derived from `day.theme` field.
 ### D-023: Repo Rename & GitHub Push
 **Decision:** Renamed project folder from `poc` to `ares_station_tg`. Pushed to `github.com/AIParlour/ares_station_tg`.  
 **Rationale:** No longer a proof of concept — this is the shipping codebase.
+
+---
+
+## Animation System (Phase 7b)
+
+### D-024: Page Transitions via Keyed Wrapper, Not AnimatePresence
+**Decision:** Cross-fade between routes by wrapping the rendered screen in a
+`<div key={route.name+params}>` that runs a 220ms `screen-fade-in` keyframe
+on mount. No `framer-motion`, no exit animations.  
+**Rationale:** Real cross-fade (both screens visible during transition)
+requires AnimatePresence-style mount-tracking which adds a dependency
+and complicates the custom `RouterProvider`. Hard-cut on exit + soft
+fade-in on enter reads as a cross-fade at this duration without the
+machinery.
+
+### D-025: Pending Reveal Lives in GameProvider, Not Local State
+**Decision:** When the player solves a puzzle, the unlock word is stamped on
+`state.pendingReveal` in `GameProvider`. `DocumentScreen` consumes this on
+mount and immediately calls `clearPendingReveal()` so the glitch→typewriter
+animation only plays once per unlock.  
+**Rationale:** Local state in `DocumentScreen` doesn't survive the
+PuzzleScreen → DocumentScreen navigation because the route change unmounts
+the document tree. Comparing `unlockedWords` against a `seenKeys` snapshot
+on mount fails because the just-unlocked word is already in the list by
+the time DocumentScreen mounts. Provider-level state lives across the
+nav hop and is wiped after one read.
+
+### D-026: Intro Sequence Is SVG + CSS Keyframes, Not Canvas/Lottie/Video
+**Decision:** First-time intro is a single SVG scene (~26 stars, Mars
+ellipse, shuttle polygon, 5 station strokes, 13 light circles) animated
+purely via `animation-delay` on `nth-child` selectors and a self-drawing
+station via `stroke-dasharray` + `stroke-dashoffset`.  
+**Rationale:** Canvas requires a JS render loop, Lottie ships a 60KB
+runtime + opaque JSON, video looks out of place in a brutalist terminal
+and bloats bundle size. SVG + CSS keyframes are declarative, themable
+via `currentColor`, gzip well, and respect `prefers-reduced-motion`
+trivially.
+
+### D-027: First-Time Detection via localStorage, Not Server State
+**Decision:** Intro shown once per device, gated by `ares_intro_seen=1`
+in localStorage. Not stored in Player table.  
+**Rationale:** Intro is per-device tone-setting, not per-account. A
+returning player on a new device should see it again (it's only ~18s
+and re-acquaints them with the world). Saves a round-trip + DB column
+for zero meaningful loss.
