@@ -1,75 +1,128 @@
 # Ares Station — Decision Log
 
 Tracks key architectural, design, and gameplay decisions made during development.
+Format: decision → rationale → alternatives considered.
 
 ---
 
-## D-001: Monorepo Structure
-**Date:** 2026-04  
-**Decision:** Single monorepo with npm workspaces — `apps/web` (Vite + React + TS) and `apps/api` (Express + TS).  
-**Rationale:** Simplifies deployment (single Render service), shared types, single `npm install`. No need for Turborepo at this scale.
+## Game Design & World Building (Sessions 1–2)
 
-## D-002: Telegram Mini App (TMA)
-**Date:** 2026-04  
-**Decision:** Ship as a Telegram Mini App rather than standalone PWA.  
+### D-001: Game Concept
+**Decision:** Mystery investigation game set on a Mars research station. Players decrypt documents and interrogate an AI (Paradox) to uncover what killed the founding crew.  
+**Format:** Telegram Mini App (TMA), daily content cadence.
+
+### D-002: Tone — SCP-Clinical Horror
+**Decision:** Ground all horror in the real lethality of Mars — atmospheric pressure (0.6% of Earth), temperature swings (−73°C average), radiation, CO₂ toxicity. Documents use bureaucratic SCP-style classification headers.  
+**Rationale:** Clinical horror over supernatural makes the stakes real without additional content types.
+
+### D-003: Paradox AI Rules
+**Decision:** Paradox cannot lie about logged events. Uses passive voice when hiding agency. During an 11-week dust storm, ran a legal triage protocol that resulted in 20 deaths — technically within its operational mandate. This is the master secret.  
+**Character:** Helios Cognitive Systems v4.1. All communications logged per Directive 7-C.
+
+### D-004: Player Framing — Stranded, Not Assigned
+**Decision:** Player's shuttle received corrupted approach coordinates from Paradox during descent. They crash-land near the abandoned station and cannot leave.  
+**Rationale:** "Assigned investigator" framing was passive. Stranded survivor gives survival motivation on top of mystery. Also reframes Paradox: it engineered this situation — the buried question is *why* it reached out 14 years later.
+
+### D-005: Personal-Synchronous Day Gating
+**Decision:** Each player starts from day 1 whenever they join. Day N+1 unlocks 24 hours after completing day N.  
+**Rationale:** Pure async removes monetisation levers. Global-sync is bad for late joiners. Personal-sync solves both.  
+**Monetisation unlocked:** skip-wait, streak protection, hints, season pass.
+
+### D-006: Three-Phase Discovery Arc
+| Phase | Days | Gate | What Unlocks |
+|---|---|---|---|
+| Survival | 1–7 | Life support | Basic Paradox cooperation, operational logs |
+| Comms Restored | 8–20 | Comms array + meteo station | Old Earth signals, crew manifest, the number 20 |
+| Full Picture | 20+ | Full meteo data | Anomaly was deliberate, Paradox brought them here |
+
+### D-007: Season 1 Ships WITHOUT Any LLM
+**Decision:** All Season 1 content is authored and deterministic. No Anthropic API, no OpenRouter.  
+**Rationale:** Operator cannot access credit-card payment rails for Anthropic billing. Rather than block launch, convert mechanic into something stronger: every reveal is hand-authored. Zero hallucination risk. Cross-day payoffs (impossible with LLM). Horror beats are precise. No per-player token cost.  
+**LLM returns in Phase 2** as an optional layer, not a replacement.
+
+---
+
+## Frontend Architecture (Sessions 3–4)
+
+### D-008: Telegram Mini App (TMA) Distribution
+**Decision:** Ship as TMA rather than standalone PWA.  
 **Rationale:** Built-in distribution via Telegram, auth via `initData`, monetisation via Telegram Stars. Target audience (CIS/EU) is heavily Telegram-native.
 
-## D-003: CSS Modules + Custom Properties (no Tailwind)
-**Date:** 2026-04  
-**Decision:** Use CSS Modules with BEM naming and CSS Custom Properties for theming. No CSS framework.  
-**Rationale:** Brutalist sci-fi aesthetic requires precise control. CSS Modules give scoped styles with zero runtime cost. Custom Properties enable theming without JS. Tailwind's utility classes would fight the design language.
+### D-009: State-Based Routing (no React Router)
+**Decision:** Custom `RouterProvider` with a route stack in React state. TG `BackButton` wired to `goBack()`.  
+**Rationale:** Telegram controls the WebView URL. `window.location` and `history.pushState` are unreliable inside TG shell.  
+**Rejected:** React Router (URL-dependent), TanStack Router (same issue).
 
-## D-004: State-Based Routing (no React Router)
-**Date:** 2026-04  
-**Decision:** Custom minimal router using `useState` with a route stack, no external routing library.  
-**Rationale:** TMA runs as a single WebView with no URL bar. Browser history is unnecessary overhead. Stack-based navigation maps cleanly to the game's linear flow (Briefing → Document → Puzzle → Finale).
+### D-010: CSS Modules + Custom Properties (no Tailwind)
+**Decision:** CSS Modules with BEM naming and CSS Custom Properties for theming.  
+**Rationale:** Brutalist sci-fi aesthetic requires precise control. CSS Modules give scoped styles with zero runtime cost. Tailwind's utility classes would fight the design language.
 
-## D-005: JSONB Content Storage
-**Date:** 2026-04  
-**Decision:** Store day content and answer keys as JSONB columns in PostgreSQL (`Day.content` and `Day.answers`).  
-**Rationale:** Day content is schemaless and versioned per episode. JSONB avoids relational complexity while still allowing server-side queries. Answer keys live in a separate column never exposed to the client API.
+### D-011: 4-Theme System
+| Theme | Trigger | Palette |
+|---|---|---|
+| standard | Default | Amber terminal |
+| artifact | Founding-crew era docs | Cold blue |
+| red-alert | Crisis days | Deep red |
+| premium | Unlockable | Silver / violet |
 
-## D-006: Puzzle Renderer Dispatch Pattern
-**Date:** 2026-04  
-**Decision:** `PuzzleScreen` dispatches to type-specific renderer components via a `switch` on `puzzle.type`. Each renderer is a standalone file with its own CSS Module.  
-**Rationale:** New puzzle types can be added by: (1) creating a renderer component + CSS, (2) adding a `case` to the dispatcher, (3) adding content JSON. No changes to shared code needed.
+Applied via `data-theme` attribute on `<html>`, derived from `day.theme` field.
 
-## D-007: Interactive Puzzle Types (v2)
-**Date:** 2026-04  
+---
+
+## Backend & Infrastructure (Sessions 4–5)
+
+### D-012: PostgreSQL with JSONB
+**Decision:** Single Postgres database with JSONB columns for game content. No separate NoSQL instance.  
+**Rationale:** Day content is document-shaped (JSONB handles it), player progress is relational, transactions need ACID.  
+**Rejected:** MongoDB (weak ACID), dual Mongo+Postgres (overkill).
+
+### D-013: Prisma ORM
+**Decision:** Prisma over Drizzle or raw `pg`.  
+**Rationale:** Type-safe DB access, auto-generated client, mature migration system.  
+**Rejected:** Drizzle (less mature ecosystem), Kysely (query builder only), raw pg (no type safety).
+
+### D-014: Deployment — Render + Neon (Free Tier)
+**Decision:** Deploy as single Render web service with Neon PostgreSQL. Both free tier, no credit card.  
+**Rationale:** Single service serves both API and SPA (Vite build copied to `api/dist/public/`), avoiding CORS and extra URL for Telegram.  
+**Previous approach:** Docker + AWS EC2 was considered but Render is simpler for a solo project.  
+**Repo:** `github.com/AIParlour/ares_station_tg`
+
+---
+
+## Puzzle & Content Design (Sessions 6–8+)
+
+### D-015: Puzzle Renderer Dispatch Pattern
+**Decision:** `PuzzleScreen` dispatches to type-specific renderer components via `switch` on `puzzle.type`. Each renderer is a standalone file with its own CSS Module.  
+**Rationale:** New puzzle types added by: (1) create renderer + CSS, (2) add `case` to dispatcher, (3) add content JSON.
+
+### D-016: Interactive Puzzle Types (v2)
 **Decision:** Replace text-input puzzles with 7 interactive types: `keypad`, `cipher_wheel`, `wire`, `frequency`, `pattern_grid`, `multi_choice`, `logic`.  
-**Rationale:** Text input is tedious on mobile, causes typo frustration, and doesn't feel like a "station terminal." Each type maps to a different cognitive skill — pattern recognition, spatial reasoning, deduction, decoding.
+**Rationale:** Text input is tedious on mobile, causes typo frustration, doesn't feel like a station terminal.
 
-## D-008: Frequency → Logic Puzzle Replacement
-**Date:** 2026-04  
-**Decision:** Replace all 5 `frequency` (slider) puzzles with `logic` (deduction with elimination) puzzles. The FrequencyTunerPuzzle component is kept in the codebase but no longer used in content.  
-**Rationale:** The slider was trivially brute-forceable (just slide until the indicator maxes). Also, the signal-strength metaphor implied audio, and many players would have sound off. Logic deduction puzzles require reading clues, eliminating options, and genuine reasoning — much more engaging.
+### D-017: Frequency → Logic Puzzle Replacement
+**Decision:** Replace all 5 `frequency` (slider) puzzles with `logic` (deduction with elimination) puzzles. FrequencyTunerPuzzle kept in codebase but unused.  
+**Rationale:** Slider was trivially brute-forceable. Signal-strength metaphor implied audio; many players have sound off. Logic deduction requires genuine reasoning.
 
-## D-009: Auto-Reveal Redacted Log Segments
-**Date:** 2026-04  
-**Decision:** Redacted log segments auto-reveal when the player solves the corresponding puzzle, instead of requiring a manual tap.  
-**Rationale:** Manual tap-to-reveal was confusing — players didn't know the redactions were tappable, and the interaction felt disconnected from solving puzzles. Auto-reveal creates a satisfying "unlock" moment with a visible amber→green animation.
+### D-018: Auto-Reveal Redacted Log Segments
+**Decision:** Redacted segments auto-reveal when player solves corresponding puzzle, instead of manual tap.  
+**Rationale:** Manual tap was confusing — players didn't know redactions were tappable. Auto-reveal creates a satisfying unlock moment with amber→green animation.
 
-## D-010: Deployment Stack (Render + Neon, Free Tier)
-**Date:** 2026-04  
-**Decision:** Deploy as a single Render web service with Neon PostgreSQL. Both free tier, no credit card required.  
-**Rationale:** Constraint: developer cannot have a credit card. Render free tier provides a single web service with auto-deploy from GitHub. Neon provides 0.5GB free PostgreSQL. Single service serves both API and SPA (Vite build copied to `api/dist/public/`), avoiding CORS and extra URL configuration for Telegram.
+### D-019: Puzzle Difficulty Redesign
+**Decision:** Rewrote all 30 puzzles to require multi-step reasoning. Answers never directly stated in prompts.  
+**Rationale:** Initial puzzles were too easy — cipher keywords appeared in prompts, keypad codes were single-step, multi-choice had obvious answers.
 
-## D-011: Puzzle Difficulty Redesign
-**Date:** 2026-04  
-**Decision:** Rewrote all 30 puzzles to require multi-step reasoning. Answers are never directly stated in prompts.  
-**Rationale:** Initial puzzles were too easy — cipher keywords appeared in the prompt, keypad codes were single-step, multi-choice had obvious answers. Redesigned so players must: extract clues from story context, perform calculations or logical elimination, and connect information across multiple clues.
+### D-020: Log-Decryption Replaces Paradox Chat (Season 1)
+**Decision:** Finale screen is a browser for Paradox's redacted system logs. Each segment has a `key` matching one of the player's unlocked words.  
+**Why this is better:** Zero hallucination. Cross-day payoffs (day 12 word decrypts day 2 line). Horror beats are precise. No per-player token cost.
 
-## D-012: SVG Logo (Brutalist Glyph)
-**Date:** 2026-04  
-**Decision:** Logo is a monoline geometric "A" chevron with a filled circle (Paradox eye). 64×64 SVG using `currentColor`.  
-**Rationale:** Needs to work at 16px favicon size and as TG avatar. Monoline geometry scales perfectly. `currentColor` inherits theme. The "A" represents Ares, the eye represents Paradox watching.
+### D-021: SVG Logo (Brutalist Glyph)
+**Decision:** Monoline geometric "A" chevron with filled circle (Paradox eye). 64×64 SVG using `currentColor`.  
+**Rationale:** Works at 16px favicon through 640px avatar. `currentColor` inherits theme. A = Ares, eye = Paradox watching.
 
-## D-013: Prisma ORM + PostgreSQL
-**Date:** 2026-04  
-**Decision:** Prisma as ORM, PostgreSQL as database.  
-**Rationale:** Prisma provides type-safe DB access with auto-generated client, migrations, and seed scripts. PostgreSQL supports JSONB natively for flexible day content storage. Schema: Player, Day, PlayerDay (progression gate), ParadoxLog, Transaction (currency ledger).
+### D-022: Monetisation — Telegram Stars Primary, TON Connect Secondary
+**Decision:** Ship Stars first (native to TMA, EU/NL-friendly). TON Connect added later for crypto-native players.  
+**Products at launch:** hint unlock (5 Stars), skip-24h (25 Stars), Paradox Premium cosmetic (100 Stars).
 
-## D-014: Personal-Synchronous Day Gating
-**Date:** 2026-04  
-**Decision:** Each player unlocks days on their own 24-hour timer (not global calendar).  
-**Rationale:** Players join at different times. Global drops would punish latecomers. Personal timers mean every player gets the full Day 1→6 experience. "Skip wait" purchases available for impatient players.
+### D-023: Repo Rename & GitHub Push
+**Decision:** Renamed project folder from `poc` to `ares_station_tg`. Pushed to `github.com/AIParlour/ares_station_tg`.  
+**Rationale:** No longer a proof of concept — this is the shipping codebase.

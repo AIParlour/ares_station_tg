@@ -162,7 +162,7 @@
       "type": "cipher_wheel",
       "author": "MIRA",
       "prompt": "Paradox's self-diagnostic produced an encrypted condition report. The thermal log lists events on exactly 6 different sols. Use this count as your cipher shift to decode the diagnosis.",
-      "hintText": "Count the sols with thermal events (there are 6). The decoded word is a medical condition involving lost memory.",
+      "hintText": "There are 6 thermal events in the log. Shift each letter back by 6. The decoded word is a medical condition involving lost memory.",
       "data": {
         "encoded": "GSTKYOG"
       },
