@@ -70,6 +70,7 @@ export function HomeScreen() {
         <button
           className={`${styles.home__menu__btn} ${styles["home__menu__btn--primary"]}`}
           onClick={handleStart}
+          disabled={allSolved}
         >
           <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
           <span className={styles.home__menu__label}>{startLabel}</span>
