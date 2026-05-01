@@ -33,9 +33,7 @@ export function HomeScreen() {
     state.day.puzzles.length > 0 &&
     state.day.puzzles.every((p) => state.solved[p.slot]);
 
-  const startLabel = allSolved
-    ? "CONTINUE INVESTIGATION TOMORROW"
-    : hasStarted
+  const startLabel = hasStarted
     ? "CONTINUE INVESTIGATION"
     : "BEGIN INVESTIGATION";
 
@@ -70,7 +68,6 @@ export function HomeScreen() {
         <button
           className={`${styles.home__menu__btn} ${styles["home__menu__btn--primary"]}`}
           onClick={handleStart}
-          disabled={allSolved}
         >
           <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
           <span className={styles.home__menu__label}>{startLabel}</span>
