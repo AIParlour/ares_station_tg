@@ -27,11 +27,11 @@ export function HomeScreen() {
   const hasStarted =
     state.completedDays.length > 0 || Object.keys(state.solved).length > 0;
 
-  const allSolved =
-    state.status === "ready" &&
-    !!state.day &&
-    state.day.puzzles.length > 0 &&
-    state.day.puzzles.every((p) => state.solved[p.slot]);
+  // const allSolved =
+  //   state.status === "ready" &&
+  //   !!state.day &&
+  //   state.day.puzzles.length > 0 &&
+  //   state.day.puzzles.every((p) => state.solved[p.slot]);
 
   const startLabel = hasStarted
     ? "CONTINUE INVESTIGATION"
