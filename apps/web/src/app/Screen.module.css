@@ -1,0 +1,27 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Screen wrapper — gives every routed screen a quick fade-in on mount so
+   route changes feel like a terminal cross-fade rather than a hard cut.
+   The wrapper carries a `key` derived from the current route, so React
+   re-mounts it on every navigation and the @keyframes animation replays.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100dvh;
+  animation: screen-fade-in 220ms ease-out both;
+}
+
+@keyframes screen-fade-in {
+  0%   { opacity: 0; transform: translateY(2px); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    animation: none;
+  }
+}
