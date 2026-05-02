@@ -232,7 +232,7 @@ export function IntroScreen() {
       onClick={handleTap}
       role="button"
       tabIndex={0}
-      aria-label="Intro sequence — tap to advance"
+      aria-label="Intro sequence: tap to advance"
     >
       <div className={styles.intro__scanlines} aria-hidden />
       <div className={styles.intro__grain}     aria-hidden />
