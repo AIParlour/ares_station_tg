@@ -1,0 +1,206 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   SensorDrillScreen — wraps the runner + ready/finished overlays.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ── Pre-round splash ─────────────────────────────────────────────────────── */
+
+.ready {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
+  text-align: center;
+  overflow-y: auto;
+}
+
+.ready__title {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-text-primary);
+  animation: ready-title-in 320ms ease-out both;
+}
+
+.ready__howto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: ready-fade-in 380ms ease-out 80ms both;
+}
+
+.ready__howto__heading {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.ready__howto__line {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Example mini-grid ────────────────────────────────────────────────────── */
+
+.ready__example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  animation: ready-fade-in 380ms ease-out 140ms both;
+}
+
+.ready__example__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.ready__example__grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: var(--spacing-xs);
+}
+
+.ready__example__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.7rem;
+  min-width: 4.5rem;
+}
+
+.ready__example__cell--bad {
+  border-color: #fca5a5;
+  background: rgba(252, 165, 165, 0.10);
+}
+
+.ready__example__id {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+}
+
+.ready__example__value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.ready__example__cell--bad .ready__example__value {
+  color: #fca5a5;
+}
+
+.ready__example__caption {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+/* ── Meta + buttons ───────────────────────────────────────────────────────── */
+
+.ready__meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  animation: ready-fade-in 380ms ease-out 200ms both;
+}
+
+.ready__begin,
+.ready__back {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-transform: uppercase;
+  min-width: 14rem;
+  transition: filter 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ready__begin {
+  background: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-bg, #0b0b0e);
+  animation: ready-fade-in 380ms ease-out 260ms both;
+}
+
+.ready__begin:hover,
+.ready__begin:focus-visible {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+.ready__back {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  animation: ready-fade-in 380ms ease-out 320ms both;
+}
+
+.ready__back:hover,
+.ready__back:focus-visible {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+@keyframes ready-title-in {
+  from { opacity: 0; letter-spacing: 0.6em; }
+  to   { opacity: 1; letter-spacing: 0.28em; }
+}
+
+@keyframes ready-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ready__title,
+  .ready__howto,
+  .ready__example,
+  .ready__meta,
+  .ready__begin,
+  .ready__back {
+    animation: none;
+    opacity: 1;
+  }
+}

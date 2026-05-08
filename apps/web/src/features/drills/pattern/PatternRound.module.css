@@ -1,0 +1,165 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   PatternRound — memory drill UI.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-sm) 0;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.head {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.head--correct {
+  border-color: #86efac;
+  color: #86efac;
+  background: rgba(134, 239, 172, 0.10);
+}
+
+.head--wrong {
+  border-color: #fca5a5;
+  color: #fca5a5;
+  background: rgba(252, 165, 165, 0.10);
+}
+
+/* ── Countdown bar (memorize phase) ───────────────────────────────────────── */
+
+.countdown {
+  width: 70%;
+  height: 3px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.countdown__fill {
+  height: 100%;
+  width: 100%;
+  background: #fbbf24;
+  transform-origin: left center;
+  animation-name: countdown-shrink;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes countdown-shrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 19rem;
+  aspect-ratio: 1 / 1;
+}
+
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+.cell {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  /* Square via aspect-ratio so cells stay tappable on small screens. */
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.cell:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+/* Lit (memorize OR wrong-reveal). */
+.cell--lit {
+  background: rgba(251, 191, 36, 0.32);
+  border-color: #fbbf24;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.32) inset;
+}
+
+/* Picked during recall. */
+.cell--picked {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: var(--color-border-active);
+}
+
+/* End-of-round states */
+.cell--correct {
+  background: rgba(134, 239, 172, 0.30);
+  border-color: #86efac;
+}
+
+.cell--wrongPick {
+  background: rgba(252, 165, 165, 0.25);
+  border-color: #fca5a5;
+}
+
+/* ── Skip ─────────────────────────────────────────────────────────────────── */
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.skip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.skip:hover:not(:disabled),
+.skip:focus-visible:not(:disabled) {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.skip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown__fill { animation: none; transform: scaleX(0.5); }
+  .cell { transition: none; }
+}

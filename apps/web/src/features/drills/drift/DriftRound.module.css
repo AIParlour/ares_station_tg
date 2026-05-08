@@ -1,0 +1,180 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   DriftRound — telemetry drill UI.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-sm) 0;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.head__metric {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.head__instruction {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+/* ── Sequence ─────────────────────────────────────────────────────────────── */
+
+.sequence {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.sequence__item {
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 6vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  min-width: 1.6em;
+  text-align: center;
+}
+
+.sequence__item:not(:last-child)::after {
+  content: ",";
+  color: var(--color-text-muted);
+  margin-left: 0.05em;
+}
+
+.sequence__item--missing {
+  color: #fbbf24;
+  border-bottom: 2px solid #fbbf24;
+  padding-bottom: 0.1rem;
+  animation: missing-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes missing-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+/* ── Choice buttons ───────────────────────────────────────────────────────── */
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 22rem;
+}
+
+.choice {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  padding: var(--spacing-md) var(--spacing-md);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+
+.choice:hover:not(:disabled),
+.choice:focus-visible:not(:disabled) {
+  border-color: var(--color-border-active);
+  outline: none;
+}
+
+.choice:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.choice:disabled {
+  cursor: not-allowed;
+}
+
+.choice--wrong {
+  animation: choice-shake 280ms ease-in-out;
+  border-color: #fca5a5;
+  color: #fca5a5;
+}
+
+.choice--correct {
+  background: rgba(134, 239, 172, 0.16);
+  border-color: #86efac;
+  color: #86efac;
+}
+
+@keyframes choice-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  50%      { transform: translateX(4px); }
+  75%      { transform: translateX(-3px); }
+}
+
+/* ── Skip ─────────────────────────────────────────────────────────────────── */
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-xs);
+}
+
+.skip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.skip:hover:not(:disabled),
+.skip:focus-visible:not(:disabled) {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.skip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sequence__item--missing { animation: none; }
+  .choice--wrong { animation: none; }
+}

@@ -17,6 +17,12 @@ import { MapScreen }       from "../features/map/MapScreen";
 import { LogBrowserScreen } from "../features/game/logs/LogBrowserScreen";
 import { StoryScreen }      from "../features/game/story/StoryScreen";
 import { IntroScreen }      from "../features/intro/IntroScreen";
+import { DrillsHubScreen }    from "../features/drills/DrillsHubScreen";
+import { CipherDrillScreen }  from "../features/drills/cipher/CipherDrillScreen";
+import { SensorDrillScreen }  from "../features/drills/sensor/SensorDrillScreen";
+import { PatternDrillScreen } from "../features/drills/pattern/PatternDrillScreen";
+import { DriftDrillScreen }   from "../features/drills/drift/DriftDrillScreen";
+import { WorkoutScreen }      from "../features/drills/workout/WorkoutScreen";
 import { initTelegramWebApp } from "../shared/hooks/useTelegram";
 import screenStyles from "./Screen.module.css";
 
@@ -31,8 +37,8 @@ function TelegramBoot() {
 
 /* ── Screen switcher ────────────────────────────────────────────────────────── */
 
-function renderScreen(name: string) {
-  switch (name) {
+function renderScreen(route: { name: string; params?: Record<string, unknown> }) {
+  switch (route.name) {
     case "loading":   return <LoadingScreen />;
     case "intro":     return <IntroScreen />;
     case "home":      return <HomeScreen />;
@@ -44,6 +50,18 @@ function renderScreen(name: string) {
     case "map":       return <MapScreen />;
     case "logs":      return <LogBrowserScreen />;
     case "story":     return <StoryScreen />;
+    case "drills":    return <DrillsHubScreen />;
+    case "drillRun": {
+      const drillType = route.params?.drillType;
+      switch (drillType) {
+        case "cipher":  return <CipherDrillScreen />;
+        case "sensor":  return <SensorDrillScreen />;
+        case "pattern": return <PatternDrillScreen />;
+        case "drift":   return <DriftDrillScreen />;
+        default:        return <DrillsHubScreen />;
+      }
+    }
+    case "workoutRun": return <WorkoutScreen />;
     default:          return <LoadingScreen />;
   }
 }
@@ -62,7 +80,7 @@ function Screens() {
 
   return (
     <div key={key} className={screenStyles.screen}>
-      {renderScreen(current.name)}
+      {renderScreen(current)}
     </div>
   );
 }

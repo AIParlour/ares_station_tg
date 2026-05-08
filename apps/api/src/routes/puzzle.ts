@@ -132,3 +132,160 @@ puzzleRouter.post("/check", async (req, res) => {
     return res.status(500).json({ ok: false, error: "Internal server error" });
   }
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/puzzle/hint
+// Body: { dayId: string, slot: string, tier: "full_decrypt" }
+//
+// v1 supports tier="full_decrypt" only. Behaviour mirrors the success branch
+// of /check but is gated on currency rather than answer correctness:
+//   - Validates the player has enough ⬡ for the tier.
+//   - Atomically: deducts ⬡, inserts a Transaction (type "hint_purchase"),
+//     marks the slot solved, creates the next-day row if it just unlocked,
+//     and returns the unlockWord so the client can fire the decrypt animation.
+// Signal Boost (tier="signal_boost") is reserved for Phase B.2 and currently
+// returns 400.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const HINT_COSTS: Record<string, number> = {
+  full_decrypt: 50,
+  signal_boost: 25,   // not wired yet — server-side cost defined for forward compat
+};
+
+puzzleRouter.post("/hint", async (req, res) => {
+  const { playerId } = req.player!;
+  const { dayId, slot, tier } = req.body ?? {};
+
+  // ── Validation ────────────────────────────────────────────────────────────
+  if (!dayId || !slot || !tier) {
+    return res.status(400).json({ ok: false, error: "Missing dayId, slot, or tier" });
+  }
+  if (tier !== "full_decrypt") {
+    return res.status(400).json({
+      ok: false,
+      error: tier === "signal_boost"
+        ? "Signal Boost not yet implemented"
+        : `Unknown tier: ${tier}`,
+    });
+  }
+  const cost = HINT_COSTS[tier];
+
+  try {
+    // ── Load player + day ─────────────────────────────────────────────────────
+    const [player, playerDay] = await Promise.all([
+      prisma.player.findUnique({ where: { id: playerId } }),
+      prisma.playerDay.findUnique({
+        where:   { playerId_dayId: { playerId, dayId } },
+        include: { day: true },
+      }),
+    ]);
+
+    if (!player) {
+      return res.status(404).json({ ok: false, error: "Player not found" });
+    }
+    if (!playerDay || playerDay.unlockedAt > new Date()) {
+      return res.status(403).json({ ok: false, error: "Day not accessible" });
+    }
+
+    // ── Slot validation ──────────────────────────────────────────────────────
+    const answers = playerDay.day.answers as Record<
+      string,
+      { answer: string; unlockWord: string; hint: string }
+    >;
+    const expected = answers[slot];
+    if (!expected) {
+      return res.status(404).json({ ok: false, error: "Unknown puzzle slot" });
+    }
+
+    const solved = playerDay.solvedSlots as Record<string, boolean>;
+    if (solved[slot]) {
+      // No point selling a hint for a solved puzzle.
+      return res.status(409).json({ ok: false, error: "Puzzle already solved" });
+    }
+
+    // ── Balance check ────────────────────────────────────────────────────────
+    if (player.balance < cost) {
+      return res.status(402).json({
+        ok:       false,
+        error:    "Insufficient balance",
+        required: cost,
+        balance:  player.balance,
+      });
+    }
+
+    // ── Compute solved snapshot + next-day creation eligibility ──────────────
+    const newSolved      = { ...solved, [slot]: true };
+    const newUnlockWords = [...playerDay.unlockWords, expected.unlockWord];
+
+    const dayContent = playerDay.day.content as { puzzles: Array<{ slot: string }> };
+    const totalSlots = dayContent.puzzles.map((p) => p.slot);
+    const allSolved  = totalSlots.every((s) => (newSolved as Record<string, boolean>)[s]);
+
+    // ── Atomic write: progress + currency + ledger + (optional) next day ─────
+    const newBalance = player.balance - cost;
+
+    await prisma.$transaction(async (tx) => {
+      // Mark slot solved (mirror /check's success branch)
+      await tx.playerDay.update({
+        where: { id: playerDay.id },
+        data: {
+          solvedSlots: newSolved,
+          unlockWords: newUnlockWords,
+          startedAt:   playerDay.startedAt ?? new Date(),
+          completedAt: allSolved ? new Date() : undefined,
+        },
+      });
+
+      // Deduct currency
+      await tx.player.update({
+        where: { id: playerId },
+        data:  { balance: { decrement: cost } },
+      });
+
+      // Append-only ledger
+      await tx.transaction.create({
+        data: {
+          playerId,
+          type:     "hint_purchase",
+          amount:   -cost,
+          dayId,
+          metadata: { slot, tier },
+        },
+      });
+
+      // If this hint just completed the day, gate the next one (same as /check)
+      if (allSolved) {
+        const nextDay = await tx.day.findFirst({
+          where: {
+            season:    playerDay.day.season,
+            dayNumber: playerDay.day.dayNumber + 1,
+          },
+        });
+        if (nextDay) {
+          const existing = await tx.playerDay.findUnique({
+            where: { playerId_dayId: { playerId, dayId: nextDay.id } },
+          });
+          if (!existing) {
+            const unlockAt = process.env.BOT_TOKEN
+              ? nextUtcMidnight()
+              : new Date();
+            await tx.playerDay.create({
+              data: { playerId, dayId: nextDay.id, unlockedAt: unlockAt },
+            });
+          }
+        }
+      }
+    });
+
+    return res.json({
+      ok:          true,
+      tier,
+      unlockWord:  expected.unlockWord,
+      newBalance,
+      allSolved,
+    });
+  } catch (err) {
+    console.error("[puzzle] hint error:", err);
+    return res.status(500).json({ ok: false, error: "Internal server error" });
+  }
+});

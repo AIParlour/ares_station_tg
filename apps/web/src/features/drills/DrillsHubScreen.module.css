@@ -1,0 +1,333 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Drills Hub — terminal-aesthetic landing for Operator Drills.
+   Matches HomeScreen / ShopScreen vocabulary: CSS vars, mono font, mute palette.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.hub {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────────── */
+
+.hub__hero {
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+}
+
+.hub__hero__title {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.hub__hero__subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+}
+
+/* ── Stat strip ──────────────────────────────────────────────────────────────── */
+
+.hub__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  padding: 0 var(--spacing-lg) var(--spacing-md);
+}
+
+.stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-sm);
+  text-align: center;
+}
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.stat__value {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.stat__suffix {
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* ── Daily Workout card ──────────────────────────────────────────────────────── */
+
+.hub__workout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0 var(--spacing-lg) var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-md);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.hub__workout:hover:not(:disabled),
+.hub__workout:focus-visible:not(:disabled) {
+  background: rgba(251, 191, 36, 0.08);
+  outline: none;
+}
+
+.hub__workout:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.hub__workout--done {
+  border-color: var(--color-border);
+}
+
+.hub__workout__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.hub__workout__label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.hub__workout__time {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.hub__workout__sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.hub__workout__chips {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.hub__workout__chip {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid var(--color-border-active);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.45rem;
+  text-transform: uppercase;
+}
+
+.hub__workout__chipDim {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.45rem;
+  letter-spacing: 0.18em;
+}
+
+/* ── Section divider ─────────────────────────────────────────────────────────── */
+
+.hub__divider {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+/* ── Drill list ──────────────────────────────────────────────────────────────── */
+
+.hub__drillList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.hub__drill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  /* Stagger fade-in */
+  opacity: 0;
+  animation: drill-card-in 280ms ease-out both;
+}
+
+.hub__drill:nth-child(1) { animation-delay: 60ms;  }
+.hub__drill:nth-child(2) { animation-delay: 130ms; }
+.hub__drill:nth-child(3) { animation-delay: 200ms; }
+.hub__drill:nth-child(4) { animation-delay: 270ms; }
+
+@keyframes drill-card-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub__drill {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.hub__drill:hover,
+.hub__drill:focus-visible {
+  border-color: var(--color-border-active);
+  background: rgba(251, 191, 36, 0.06);
+  outline: none;
+}
+
+.hub__drill__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.hub__drill__name {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+.hub__drill__blurb {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.hub__drill__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+.hub__drill__pb {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.hub__drill__domain {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+/* ── Mastery badges ──────────────────────────────────────────────────────────── */
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  border-radius: var(--radius-sm);
+  padding: 0.15rem 0.4rem;
+  text-transform: uppercase;
+}
+
+.badge--bronze {
+  color: #d97706;
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+
+.badge--silver {
+  color: #d1d5db;
+  background: rgba(209, 213, 219, 0.08);
+  border: 1px solid rgba(209, 213, 219, 0.4);
+}
+
+.badge--gold {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.5);
+}
+
+.badge_none {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.18em;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────────── */
+
+.hub__footer {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--spacing-md) var(--spacing-lg) 0;
+  text-transform: uppercase;
+  margin-top: auto;
+}

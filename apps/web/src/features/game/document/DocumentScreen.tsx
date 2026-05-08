@@ -16,16 +16,68 @@ import { haptic } from "../../../shared/hooks/useTelegram";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faLockOpen, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import type { ParadoxLog, LogSegment } from "../../../shared/types/game";
+import {
+  fetchProgress,
+  findNextLockedDay,
+  type ProgressDay,
+} from "../../../shared/api/progress";
+import { LockedDayCard } from "./LockedDayCard";
 import styles from "./DocumentScreen.module.css";
 
 export function DocumentScreen() {
-  const { state, clearPendingReveal } = useGame();
+  const { state, clearPendingReveal, reload } = useGame();
   const { navigate, goBack } = useRouter();
 
   /* Snapshot the freshly-unlocked key on mount. After we read it we wipe
      it from the provider so navigating back later won't re-trigger the
      decrypt animation on an already-revealed segment. */
   const [animateKey, setAnimateKey] = useState<string | null>(state.pendingReveal);
+
+  /* Progress / balance — only fetched when we need to render LockedDayCard. */
+  const [progressBalance, setProgressBalance] = useState<number | null>(null);
+  const [progressNextLocked, setProgressNext] = useState<ProgressDay | null>(null);
+  const [progressError, setProgressError]     = useState<string | null>(null);
+
+  // Determine whether the player has finished today's mission.
+  const dayId = state.day?.dayId;
+  const isCurrentDayCompleted = !!dayId && state.completedDays.some((d) => d.dayId === dayId);
+
+  // Loading is derived: in the "completed day" branch, we're loading until
+  // either balance arrives or an error sets. Avoids a deadlock where a
+  // strict-mode double-effect leaves a `loading` flag stuck at true.
+  const progressLoading =
+    isCurrentDayCompleted && progressBalance === null && progressError === null;
+
+  useEffect(() => {
+    if (!isCurrentDayCompleted) return;
+    if (progressBalance !== null || progressError !== null) return;
+
+    let cancelled = false;
+    fetchProgress()
+      .then((res) => {
+        if (cancelled) return;
+        setProgressBalance(res.player.balance);
+        setProgressNext(findNextLockedDay(res.days));
+      })
+      .catch((e) => {
+        if (cancelled) return;
+        setProgressError(e instanceof Error ? e.message : "Could not load progress");
+      });
+    return () => { cancelled = true; };
+  }, [isCurrentDayCompleted, progressBalance, progressError]);
+
+  const handleSkipped = (newBalance: number) => {
+    // Reflect locally for immediate feedback…
+    setProgressBalance(newBalance);
+    setProgressNext(null);
+    // …then reload the day to pick up the newly-unlocked one.
+    reload();
+  };
+
+  const handleGoDrills = () => {
+    haptic("selection");
+    navigate({ name: "drills" });
+  };
 
   useEffect(() => {
     if (state.pendingReveal) {
@@ -82,7 +134,46 @@ export function DocumentScreen() {
     navigate({ name: "story" });
   };
 
-  /* ── Render ───────────────────────────────────────────────────────────────── */
+  /* ── Render: locked-day waiting state ─────────────────────────────────── */
+
+  if (isCurrentDayCompleted && progressNextLocked) {
+    return (
+      <div className={styles.day}>
+        <Classification level="standard" label="AWAITING NEXT MISSION" />
+        <TopBar onBack={goBack} title="STANDBY" />
+        <LockedDayCard
+          dayId={progressNextLocked.dayId}
+          dayNumber={progressNextLocked.dayNumber}
+          unlockedAt={progressNextLocked.unlockedAt}
+          balance={progressBalance ?? 0}
+          onSkipped={handleSkipped}
+          onGoDrills={handleGoDrills}
+        />
+      </div>
+    );
+  }
+
+  if (isCurrentDayCompleted && progressLoading) {
+    return (
+      <div className={styles.day}>
+        <Classification level="standard" label="AWAITING NEXT MISSION" />
+        <TopBar onBack={goBack} title="STANDBY" />
+        <div className={styles.day__loading}>RETRIEVING NEXT BRIEF…</div>
+      </div>
+    );
+  }
+
+  if (isCurrentDayCompleted && progressError) {
+    return (
+      <div className={styles.day}>
+        <Classification level="standard" label="AWAITING NEXT MISSION" />
+        <TopBar onBack={goBack} title="STANDBY" />
+        <div className={styles.day__error}>{progressError}</div>
+      </div>
+    );
+  }
+
+  /* ── Render: active day ───────────────────────────────────────────────── */
 
   return (
     <div className={styles.day}>

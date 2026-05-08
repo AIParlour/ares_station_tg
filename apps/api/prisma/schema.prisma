@@ -36,6 +36,12 @@ model Player {
   paradoxLogs  ParadoxLog[]
   transactions Transaction[]
 
+  // Operator Drills
+  drillStats    PlayerDrillStat[]
+  workouts      WorkoutSession[]
+  drillStreak   PlayerDrillStreak?
+  codexUnlocks  PlayerCodexUnlock[]
+
   @@map("players")
 }
 
@@ -123,6 +129,7 @@ model ParadoxLog {
 // Balance is always derived as SUM(amount) — never stored as a mutable field.
 // amount: positive = credit, negative = debit
 // type:   "purchase" | "reward" | "refund" | "skip_wait" | "hint" | "streak_save"
+//         | "drill_reward"
 
 model Transaction {
   id        String   @id @default(uuid())
@@ -139,4 +146,108 @@ model Transaction {
 
   @@index([playerId])
   @@map("transactions")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OPERATOR DRILLS
+// Side-mode mini-games. Mechanically independent of the main story.
+// See OPERATOR_DRILLS_ROADMAP.md for full design.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── PlayerDrillStat ───────────────────────────────────────────────────────────
+// One row per player per drill type. Tracks personal best and mastery tier.
+// drillType: "cipher" | "sensor" | "pattern" | "drift" (v1)
+// masteryTier: "none" | "bronze" | "silver" | "gold"
+
+model PlayerDrillStat {
+  id                String   @id @default(uuid())
+  playerId          String
+  drillType         String
+  bestScore         Int      @default(0)
+  masteryTier       String   @default("none")
+  totalSessions     Int      @default(0)
+  totalRoundsPlayed Int      @default(0)
+  updatedAt         DateTime @updatedAt
+
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@unique([playerId, drillType])
+  @@map("player_drill_stats")
+}
+
+// ── WorkoutSession ────────────────────────────────────────────────────────────
+// One row per player per UTC day. Daily Workout completion record.
+// drillsPlayed Json: [{ drillType: string, score: number }, ...]
+// Daily-uniqueness enforced via @@unique([playerId, utcDay]).
+// utcDay format: "YYYY-MM-DD"
+
+model WorkoutSession {
+  id              String   @id @default(uuid())
+  playerId        String
+  utcDay          String
+  drillsPlayed    Json
+  integrityScore  Int
+  currencyAwarded Int      @default(0)
+  completedAt     DateTime @default(now())
+
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@unique([playerId, utcDay])
+  @@index([playerId, completedAt])
+  @@map("workout_sessions")
+}
+
+// ── PlayerDrillStreak ─────────────────────────────────────────────────────────
+// Single row per player. Tracks consecutive-day Daily Workout completion.
+// lastWorkoutDay format: "YYYY-MM-DD" — the UTC day of the last completed workout.
+
+model PlayerDrillStreak {
+  id              String   @id @default(uuid())
+  playerId        String   @unique
+  currentStreak   Int      @default(0)
+  longestStreak   Int      @default(0)
+  lastWorkoutDay  String?
+  updatedAt       DateTime @updatedAt
+
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@map("player_drill_streaks")
+}
+
+// ── CodexEntry ────────────────────────────────────────────────────────────────
+// World-flavored articles unlocked by drill performance. Atmospheric only —
+// never carries main-story content (architectural invariant).
+// unlockType: "drill_score" | "drill_mastery" | "workout_streak"
+// unlockCondition Json: shape depends on unlockType, e.g.
+//   { drillType: "cipher", threshold: 12 }   // for drill_score / drill_mastery
+//   { streak: 7 }                            // for workout_streak
+
+model CodexEntry {
+  id              String   @id
+  title           String
+  body            String
+  unlockType      String
+  unlockCondition Json
+  sortOrder       Int      @default(0)
+
+  unlocks PlayerCodexUnlock[]
+
+  @@map("codex_entries")
+}
+
+// ── PlayerCodexUnlock ─────────────────────────────────────────────────────────
+// Append-only record of which codex entries each player has unlocked.
+
+model PlayerCodexUnlock {
+  id           String   @id @default(uuid())
+  playerId     String
+  codexEntryId String
+  unlockedAt   DateTime @default(now())
+
+  player Player     @relation(fields: [playerId], references: [id])
+  entry  CodexEntry @relation(fields: [codexEntryId], references: [id])
+
+  @@unique([playerId, codexEntryId])
+  @@index([playerId])
+  @@map("player_codex_unlocks")
 }

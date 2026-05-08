@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faMap, faFolderOpen, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faMap, faFolderOpen, faCartShopping, faBrain } from "@fortawesome/free-solid-svg-icons";
 import { Classification } from "../../shared/ui/Classification/Classification";
 import { useRouter } from "../../app/Router";
 import { useGame } from "../game/GameProvider";
@@ -52,6 +52,11 @@ export function HomeScreen() {
     navigate({ name: "map" });
   };
 
+  const handleDrills = () => {
+    haptic("selection");
+    navigate({ name: "drills" });
+  };
+
   return (
     <div className={styles.home}>
       <Classification level="standard" />
@@ -72,6 +77,12 @@ export function HomeScreen() {
           <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
           <span className={styles.home__menu__label}>{startLabel}</span>
           <span className={styles.home__menu__sub}>DECRYPT · INTERROGATE · UNCOVER</span>
+        </button>
+
+        <button className={styles.home__menu__btn} onClick={handleDrills}>
+          <span className={styles.home__menu__icon}><FontAwesomeIcon icon={faBrain} /></span>
+          <span className={styles.home__menu__label}>OPERATOR DRILLS</span>
+          <span className={styles.home__menu__sub}>COGNITIVE CALIBRATION · DAILY WORKOUT</span>
         </button>
 
         <button className={styles.home__menu__btn} onClick={handleMap}>

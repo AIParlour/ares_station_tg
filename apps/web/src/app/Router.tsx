@@ -28,7 +28,10 @@ export type RouteName =
   | "shop"
   | "map"
   | "logs"
-  | "story";
+  | "story"
+  | "drills"
+  | "drillRun"
+  | "workoutRun";
 
 export interface RouteState {
   name: RouteName;

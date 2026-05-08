@@ -1,0 +1,221 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   CipherRound — single-puzzle UI used inside the DrillRunner stage.
+   Substitution-cipher version: the visible key strip dominates the top.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  flex: 1;
+  padding: var(--spacing-sm) 0;
+  transition: background 0.15s;
+}
+
+/* ── Substitution key strip ───────────────────────────────────────────────── */
+
+.key {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 0.15rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.4rem;
+}
+
+.key__rowLabel {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  padding-left: 0.2rem;
+}
+
+.key__row {
+  display: grid;
+  grid-template-columns: repeat(26, 1fr);
+  gap: 1px;
+}
+
+.key__cellPlain,
+.key__cellCipher {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.18rem 0;
+  letter-spacing: 0;
+  border-radius: 2px;
+}
+
+.key__cellPlain {
+  color: var(--color-text-muted);
+}
+
+.key__cellCipher {
+  color: var(--color-text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Highlight the cipher cells whose letters appear in the current ciphertext.
+   Drives the player's eye to the substitutions they actually need. */
+.key__cellCipher--hit {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.16);
+}
+
+/* ── Prompt + cipher word ─────────────────────────────────────────────────── */
+
+.round__hint {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-top: var(--spacing-xs);
+}
+
+.round__cipher {
+  font-family: var(--font-mono);
+  font-size: clamp(1.6rem, 8vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-text-primary);
+  text-align: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  word-break: break-all;
+  min-width: 60%;
+  max-width: 100%;
+}
+
+.round__cipher--shake {
+  animation: cipher-shake 280ms ease-in-out;
+  border-color: #fca5a5;
+  color: #fca5a5;
+}
+
+@keyframes cipher-shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+.round--correct {
+  background: rgba(134, 239, 172, 0.10);
+}
+
+.round__arrow {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+.round__plain__label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: -0.1rem;
+}
+
+/* ── Input + actions ──────────────────────────────────────────────────────── */
+
+.round__input {
+  width: 100%;
+  max-width: 18rem;
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  outline: none;
+  caret-color: var(--color-text-primary);
+}
+
+.round__input:focus {
+  border-color: var(--color-border-active);
+}
+
+.round__input::placeholder {
+  color: var(--color-text-muted);
+  letter-spacing: 0.18em;
+}
+
+.round__input:disabled {
+  opacity: 0.5;
+}
+
+.round__actions {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 18rem;
+  margin-top: var(--spacing-xs);
+}
+
+.round__skip,
+.round__submit {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.round__skip {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.round__skip:hover:not(:disabled),
+.round__skip:focus-visible:not(:disabled) {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.round__submit {
+  background: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-bg, #0b0b0e);
+}
+
+.round__submit:disabled,
+.round__skip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.round__submit:hover:not(:disabled),
+.round__submit:focus-visible:not(:disabled) {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .round__cipher--shake { animation: none; }
+}

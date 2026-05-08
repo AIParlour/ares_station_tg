@@ -8,6 +8,7 @@ import { dayRouter }      from "./routes/day.js";
 import { puzzleRouter }   from "./routes/puzzle.js";
 import { paradoxRouter }  from "./routes/paradox.js";
 import { progressRouter } from "./routes/progress.js";
+import { drillsRouter }   from "./routes/drills.js";
 import { startBot, sendDailyNotifications } from "./bot/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -39,6 +40,7 @@ app.use("/api/days",     dayRouter);
 app.use("/api/puzzle",   puzzleRouter);
 app.use("/api/paradox",  paradoxRouter);
 app.use("/api/progress", progressRouter);
+app.use("/api/drills",   drillsRouter);
 
 // ── Static frontend (production) ─────────────────────────────────────────────
 // In production the built SPA is copied into dist/public/ by the build script.

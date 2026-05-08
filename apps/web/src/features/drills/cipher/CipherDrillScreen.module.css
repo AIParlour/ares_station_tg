@@ -1,0 +1,214 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   CipherDrillScreen — wraps the runner + ready/finished overlays.
+   Most of the actual round chrome lives in DrillRunner.module.css and
+   CipherRound.module.css. This file only styles the pre-round splash.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ── Pre-round splash ─────────────────────────────────────────────────────── */
+
+.ready {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-lg);
+  padding-bottom: calc(var(--safe-area-bottom) + var(--spacing-lg));
+  text-align: center;
+  overflow-y: auto;
+}
+
+.ready__title {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--color-text-primary);
+  animation: ready-title-in 320ms ease-out both;
+}
+
+.ready__rules {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  text-transform: uppercase;
+  animation: ready-fade-in 380ms ease-out 80ms both;
+}
+
+/* ── How-it-works ─────────────────────────────────────────────────────────── */
+
+.ready__howto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: ready-fade-in 380ms ease-out 80ms both;
+}
+
+.ready__howto__heading {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.ready__howto__line {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Worked example ───────────────────────────────────────────────────────── */
+
+.ready__example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  animation: ready-fade-in 380ms ease-out 140ms both;
+}
+
+.ready__example__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.ready__example__grid {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: var(--spacing-md);
+}
+
+.ready__example__col {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 0.15rem;
+}
+
+.ready__example__plain {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.ready__example__arrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+.ready__example__cipher {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 0.04em;
+}
+
+.ready__example__caption {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+}
+
+/* ── Meta line ────────────────────────────────────────────────────────────── */
+
+.ready__meta {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  animation: ready-fade-in 380ms ease-out 200ms both;
+}
+
+.ready__begin,
+.ready__back {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-transform: uppercase;
+  min-width: 14rem;
+  transition: filter 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ready__begin {
+  background: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-bg, #0b0b0e);
+  animation: ready-fade-in 380ms ease-out 260ms both;
+}
+
+.ready__begin:hover,
+.ready__begin:focus-visible {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+.ready__back {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  animation: ready-fade-in 380ms ease-out 320ms both;
+}
+
+.ready__back:hover,
+.ready__back:focus-visible {
+  border-color: var(--color-border-active);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+@keyframes ready-title-in {
+  from { opacity: 0; letter-spacing: 0.6em; }
+  to   { opacity: 1; letter-spacing: 0.28em; }
+}
+
+@keyframes ready-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ready__title,
+  .ready__rules,
+  .ready__begin,
+  .ready__back {
+    animation: none;
+    opacity: 1;
+  }
+}
