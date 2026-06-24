@@ -44,19 +44,12 @@ function validateInitData(initData: string, botToken: string): {
     return { valid: false };
   }
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// POST /api/auth/telegram
-// Body: { initData: string }
-// Returns: { ok, token, user, isNewPlayer }
-// ─────────────────────────────────────────────────────────────────────────────
 authRouter.post("/telegram", async (req, res) => {
   const { initData } = req.body ?? {};
   if (!initData || typeof initData !== "string") {
     return res.status(400).json({ ok: false, error: "Missing initData" });
   }
 
-  // ── Parse TG user ──────────────────────────────────────────────────────────
   let tgUser: Record<string, unknown>;
 
   if (!BOT_TOKEN) {

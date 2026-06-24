@@ -1,38 +1,9 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import type { PrivateDay as Day } from "@hva/domain";
 
 const here = dirname(fileURLToPath(import.meta.url));
-
-export type RedactSpec = { slot: string; placeholder: string; reveal: string };
-export type DocLine = { text: string; redact?: RedactSpec; rest?: string };
-export type Puzzle = {
-  slot: string;
-  type: "riddle" | "sequence" | "math" | "cipher" | "wordplay";
-  author?: string;
-  prompt: string;
-  hintText?: string | null;
-  _answer: string;
-  unlockWord: string;
-};
-export type Finale = {
-  goal: string;
-  constraintWords: string[];
-  preUnlocked: string[];
-  forbidden: string[];
-  _targetPhrase: string;
-  maxAttempts: number;
-};
-export type Day = {
-  id: string;
-  number: number;
-  title: string;
-  stardate: string;
-  author: { short: string; full: string };
-  document: DocLine[];
-  puzzles: Puzzle[];
-  finale: Finale;
-};
 
 const day1Path = resolve(here, "day1.json");
 export const day1: Day = JSON.parse(readFileSync(day1Path, "utf-8"));

@@ -3,20 +3,24 @@
   "private": true,
   "version": "0.0.1",
   "workspaces": [
+    "packages/*",
     "apps/*"
   ],
   "scripts": {
     "dev": "concurrently -n API,WEB -c yellow,cyan \"npm:dev:api\" \"npm:dev:web\"",
     "dev:api": "npm --workspace @hva/api run dev",
     "dev:web": "npm --workspace @hva/web run dev",
-    "build": "npm run build --workspaces --if-present",
+    "dev:mobile": "npm --workspace @hva/mobile run start",
+    "build": "npm run build --workspace @hva/domain && npm run build --workspace @hva/content-schema && npm run build --workspace @hva/api && npm run build --workspace @hva/web",
+    "test:content": "npm run build --workspace @hva/domain && npm run build --workspace @hva/content-schema && node scripts/validate-content.mjs",
+    "typecheck:mobile": "npm run typecheck --workspace @hva/mobile",
     "build:production": "bash scripts/build-production.sh",
     "start": "node apps/api/dist/index.js",
     "db:migrate": "cd apps/api && npx prisma migrate deploy",
     "db:seed": "cd apps/api && npx prisma db seed"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.19.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

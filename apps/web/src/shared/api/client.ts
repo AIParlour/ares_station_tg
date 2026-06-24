@@ -1,7 +1,3 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   Base API client — centralises auth headers and error handling
-   ───────────────────────────────────────────────────────────────────────────── */
-
 let _token: string | null = null;
 
 export function setAuthToken(token: string): void {
